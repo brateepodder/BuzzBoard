@@ -6,7 +6,8 @@
 
     <!-- Top line shape -->
     <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M3,3h18v2H3V3Z" />
+        android:fillColor="@color/white"
+        android:pathData="M3,3h18v2H3V3Z"
+        android:tintMode="src_over"/>
 
 </vector>
