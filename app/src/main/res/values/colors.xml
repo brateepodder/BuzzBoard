@@ -15,14 +15,14 @@
     <color name="white">#FFFFFFFF</color>
 
 <!--    These are the colors that determine the bubbles, go ahead and change -->
-    <color name="bubble_1">#7692FF</color>
-    <color name="bubble_2">#ABD2FA</color>
-    <color name="bubble_3">#F06449</color>
-    <color name="bubble_4">#99C24D</color>
-    <color name="bubble_5">#A3B4A2</color>
-    <color name="bubble_6">#99C24D</color>
-    <color name="bubble_7">#CBC5EA</color>
-    <color name="bubble_8">#068D9D</color>
-    <color name="bubble_9">#BE97C6</color>
-    <color name="bubble_10">#CDD3D5</color>
+    <color name="bubble_1">#ffe605</color>
+    <color name="bubble_2">#bfde2e</color>
+    <color name="bubble_3">#83d14d</color>
+    <color name="bubble_4">#47c166</color>
+    <color name="bubble_5">#00af78</color>
+    <color name="bubble_6">#009b84</color>
+    <color name="bubble_7">#008586</color>
+    <color name="bubble_8">#00707e</color>
+    <color name="bubble_9">#00707e</color>
+    <color name="bubble_10">#0c5a6d</color>
 </resources>

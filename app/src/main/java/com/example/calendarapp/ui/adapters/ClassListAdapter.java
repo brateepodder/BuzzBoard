@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.ClassViewHolder> {
 
@@ -66,8 +65,8 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
     @Override
     public void onBindViewHolder(@NonNull ClassViewHolder holder, int position) {
         // Get the data model based on position
-        ClassModel classModel = mClassList.get(position);
         Collections.sort(mClassList);
+        ClassModel classModel = mClassList.get(position);
 
         // Set item views based on your views and data model
         holder.courseNameTextView.setText(classModel.getCourseName());
@@ -88,11 +87,12 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
                 R.color.bubble_10,
                 R.color.yellow
         ));
+    //!!Add a mod function to wrap around to pick colors in sequence
+        // Calculate the color index based on the position
+        int colorIndex = position % colorResources.size();
 
-        Random random = new Random();
-        int randomNumber = random.nextInt(11);
-
-        int selectedColorResource = colorResources.get(randomNumber);
+        // Get the color resource corresponding to the calculated index
+        int selectedColorResource = colorResources.get(colorIndex);
 
 // Get the actual color integer value from the color resource
         int selectedColor = ContextCompat.getColor(mContext, selectedColorResource);
