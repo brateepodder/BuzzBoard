@@ -22,4 +22,8 @@
     <style name="Theme.CalendarApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.CalendarApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="btn_style" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@null</item>
+    </style>
 </resources>

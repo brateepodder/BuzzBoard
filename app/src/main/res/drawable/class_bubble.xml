@@ -3,5 +3,5 @@
     android:shape="rectangle"
     android:id="@+id/bubble">
     <corners android:radius="20dp"/> <!-- Adjust the radius as needed -->
-    <solid android:color="@color/bubble_10"/>
+    <solid android:color="@color/yellow"/>
 </shape>

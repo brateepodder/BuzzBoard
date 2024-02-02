@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:visibility="visible">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ClassLayout"
@@ -86,11 +87,11 @@
 
         <Button
             android:id="@+id/class_edit_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginStart="35dp"
-            android:textColor="@color/white"
             android:background="@drawable/edit_button"
+            app:backgroundTint="@null"
             app:layout_constraintBottom_toTopOf="@+id/timeTextView"
             app:layout_constraintEnd_toStartOf="@+id/class_delete_button"
             app:layout_constraintStart_toEndOf="@+id/courseNameTextView"
@@ -98,12 +99,12 @@
 
         <Button
             android:id="@+id/class_delete_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
             android:layout_marginStart="15dp"
-            android:layout_marginEnd="5dp"
-            android:textColor="@color/white"
-            android:background="@drawable/edit_button"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_cross"
+            app:backgroundTint="@null"
             app:layout_constraintBottom_toTopOf="@+id/timeTextView"
             app:layout_constraintEnd_toEndOf="@+id/ClassLayout"
             app:layout_constraintStart_toEndOf="@id/class_edit_button"
