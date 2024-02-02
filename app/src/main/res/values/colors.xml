@@ -5,9 +5,19 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="yellow">#D59F00</color>
+    <color name="yellow">#FFAA00</color>
     <color name="gatech_blue">#003057</color>
     <color name="royal_blue">#014780</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="bubble_1">#7692FF</color>
+    <color name="bubble_2">#ABD2FA</color>
+    <color name="bubble_3">#F06449</color>
+    <color name="bubble_4">#99C24D</color>
+    <color name="bubble_5">#A3B4A2</color>
+    <color name="bubble_6">#99C24D</color>
+    <color name="bubble_7">#CBC5EA</color>
+    <color name="bubble_8">#068D9D</color>
+    <color name="bubble_9">#BE97C6</color>
+    <color name="bubble_10">#CDD3D5</color>
 </resources>
