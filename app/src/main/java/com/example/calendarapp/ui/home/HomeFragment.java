@@ -53,17 +53,22 @@ public class HomeFragment extends Fragment {
 
         // Add sample data (you can replace this with your actual data)
         classList.add(new ClassModel("CS2110", LocalTime.parse("2:00 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("3:15 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.TUESDAY, DayOfWeek.THURSDAY}, "Dr. MaryGold"));
-        classList.add(new ClassModel("CS2340", LocalTime.parse("09:30 AM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("10:45 PM", DateTimeFormatter.ofPattern("h:mm a")),new DayOfWeek[]{DayOfWeek.TUESDAY, DayOfWeek.THURSDAY}, "Prof. Johnson"));
-        classList.add(new ClassModel("MATH1554", LocalTime.parse("10:30 AM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("12:30 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY}, "Dr. Smith"));
+        classList.add(new ClassModel("CS2200", LocalTime.parse("09:30 AM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("10:45 PM", DateTimeFormatter.ofPattern("h:mm a")),new DayOfWeek[]{DayOfWeek.TUESDAY, DayOfWeek.THURSDAY}, "Prof. Johnson"));
+        classList.add(new ClassModel("MATH1553", LocalTime.parse("10:30 AM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("12:30 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY}, "Dr. Smith"));
         classList.add(new ClassModel("ARBC1002", LocalTime.parse("5:00 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("6:00 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY}, "Mr. Ahmed"));
         classList.add(new ClassModel("CS2110", LocalTime.parse("2:00 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("3:15 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.TUESDAY, DayOfWeek.THURSDAY}, "Dr. MaryGold"));
-        classList.add(new ClassModel("CS2340", LocalTime.parse("09:30 AM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("10:45 PM", DateTimeFormatter.ofPattern("h:mm a")),new DayOfWeek[]{DayOfWeek.TUESDAY, DayOfWeek.THURSDAY}, "Prof. Johnson"));
+        classList.add(new ClassModel("CS1332", LocalTime.parse("09:30 AM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("10:45 PM", DateTimeFormatter.ofPattern("h:mm a")),new DayOfWeek[]{DayOfWeek.TUESDAY, DayOfWeek.THURSDAY}, "Prof. Johnson"));
         classList.add(new ClassModel("MATH1554", LocalTime.parse("10:30 AM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("12:30 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY}, "Dr. Smith"));
-        classList.add(new ClassModel("ARBC1002", LocalTime.parse("5:00 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("6:00 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY}, "Mr. Ahmed"));
-
-
+        classList.add(new ClassModel("ARBC1001", LocalTime.parse("5:00 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("6:00 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY}, "Mr. Ahmed"));
         // Notify adapter about data change
         adapter.notifyDataSetChanged();
+
+//        classList.removeIf(classModel -> classModel.getCourseName().equals("ARBC1002"));
+//        classList.removeIf(classModel -> classModel.getCourseName().equals("MATH1554"));
+//
+//        // Notify adapter about the data change after removing classes
+//        adapter.notifyDataSetChanged();
+
 
         return root;
     }

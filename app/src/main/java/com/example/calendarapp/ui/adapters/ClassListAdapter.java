@@ -19,6 +19,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -66,6 +67,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
     public void onBindViewHolder(@NonNull ClassViewHolder holder, int position) {
         // Get the data model based on position
         ClassModel classModel = mClassList.get(position);
+        Collections.sort(mClassList);
 
         // Set item views based on your views and data model
         holder.courseNameTextView.setText(classModel.getCourseName());
@@ -83,11 +85,12 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
                 R.color.bubble_7,
                 R.color.bubble_8,
                 R.color.bubble_9,
-                R.color.bubble_10
+                R.color.bubble_10,
+                R.color.yellow
         ));
 
         Random random = new Random();
-        int randomNumber = random.nextInt(10);
+        int randomNumber = random.nextInt(11);
 
         int selectedColorResource = colorResources.get(randomNumber);
 

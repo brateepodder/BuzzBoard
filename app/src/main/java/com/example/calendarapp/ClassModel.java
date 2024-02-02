@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.time.format.TextStyle;
 
-public class ClassModel {
+public class ClassModel implements Comparable<ClassModel>{
     private String courseName;
     private LocalTime startTime;
     private LocalTime endTime;
@@ -95,6 +95,11 @@ public class ClassModel {
 
     public void setInstructors(String instructors) {
         this.instructors = instructors;
+    }
+
+    @Override
+    public int compareTo(ClassModel other) {
+        return this.startTime.compareTo(other.startTime);
     }
 
 }
