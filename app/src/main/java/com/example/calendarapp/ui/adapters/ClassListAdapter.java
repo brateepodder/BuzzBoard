@@ -156,7 +156,16 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a", Locale.US);
         String startTimeString = startTime.format(formatter);
         boolean isAM = startTimeString.endsWith("AM");
-        spinnerStartHour.setSelection(startTime.getHour() - 1);
+        // Convert 24-hour format to 12-hour format
+        int startHour = startTime.getHour();
+        if (startHour == 0) {
+            startHour = 12; // Convert 0 (midnight) to 12 AM
+        } else if (startHour > 12) {
+            startHour -= 12; // Convert 13-23 to 1-11 PM
+        }
+
+        int spinnerSelection = (startHour == 12) ? 11 : (startHour - 1);
+        spinnerStartHour.setSelection(spinnerSelection);
         spinnerStartMinute.setSelection(startTime.getMinute() / 5);
         spinnerStartAm.setSelection(isAM ? 0 : 1);
 
@@ -164,7 +173,16 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
         LocalTime endTime = classModel.getEndTime();
         String endTimeString = endTime.format(formatter);
         boolean isAM2 = endTimeString.endsWith("AM");
-        spinnerEndHour.setSelection(endTime.getHour() - 1);
+        // Convert 24-hour format to 12-hour format
+        int endHour = startTime.getHour();
+        if (endHour == 0) {
+            endHour = 12; // Convert 0 (midnight) to 12 AM
+        } else if (endHour > 12) {
+            endHour -= 12; // Convert 13-23 to 1-11 PM
+        }
+
+        int spinnerSelection2 = (endHour == 12) ? 11 : (endHour - 1);
+        spinnerStartHour.setSelection(spinnerSelection2);
         spinnerEndMinute.setSelection(endTime.getMinute() / 5);
         spinnerEndAm.setSelection(isAM2 ? 0 : 1);
 
@@ -195,22 +213,23 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
                 LocalTime endTime = LocalTime.of(endHour % 12 + (endAmPm.equals("PM") ? 12 : 0), endMinute);
 
                 // Remove the class from its current position in the list
-                mClassList.remove(position);
+                int index = mClassList.indexOf(classModel);
+                if (index != -1) {
+                    // Remove the class from its current position in the list
+                    mClassList.remove(index);
 
-                // Update classModel with new information
-                classModel.setCourseName(editTextCourseName.getText().toString());
-                classModel.setStartTime(startTime);
-                classModel.setEndTime(endTime);
-                classModel.setInstructors(editTextInstructors.getText().toString());
+                    // Update classModel with new information
+                    classModel.setCourseName(editTextCourseName.getText().toString());
+                    classModel.setStartTime(startTime);
+                    classModel.setEndTime(endTime);
+                    classModel.setInstructors(editTextInstructors.getText().toString());
 
-                // Add the updated class back into the list
-                mClassList.add(classModel);
+                    // Add the updated class back into the list
+                    mClassList.add(classModel);
 
-                // Sort the list
-                Collections.sort(mClassList);
-
-                // Notify the adapter of the data change
-                notifyDataSetChanged();
+                    // Notify the adapter of the data change
+                    notifyDataSetChanged();
+                }
 
                 // Dismiss the dialog
                 dialog.dismiss();
