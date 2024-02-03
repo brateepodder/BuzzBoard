@@ -6,7 +6,10 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +25,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+import androidx.appcompat.app.AlertDialog;
+
 
 public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.ClassViewHolder> {
 
@@ -42,6 +48,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
         public TextView instructorsTextView;
         public View classBubbleView; // Add a reference to the background view
         public Button deleteButton;
+        public Button editButton;
 
 
         public ClassViewHolder(View itemView) {
@@ -52,6 +59,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
             instructorsTextView = itemView.findViewById(R.id.instructorsTextView);
             classBubbleView = itemView.findViewById(R.id.bubble); // Initialize the reference
             deleteButton = itemView.findViewById(R.id.class_delete_button); // Initialize delete button
+            editButton = itemView.findViewById(R.id.class_edit_button);
         }
     }
 
@@ -67,6 +75,14 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(@NonNull ClassViewHolder holder, int position) {
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Show the edit dialog
+                showEditDialog(mClassList.get(position), position);
+            }
+        });
+
         //Delete button onClickListener
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +130,118 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
         Drawable backgroundDrawable = ContextCompat.getDrawable(mContext, R.drawable.class_bubble);
         backgroundDrawable.setTint(selectedColor);
     }
+
+    private void showEditDialog(ClassModel classModel, int position) {
+        // Inflate the dialog layout
+        View dialogView = LayoutInflater.from(mContext).inflate(R.layout.edit_class_dialog, null);
+
+        // Find views within the dialog layout
+        // Find views within the dialog layout
+        EditText editTextCourseName = dialogView.findViewById(R.id.editClassCourseName);
+        Spinner spinnerStartHour = dialogView.findViewById(R.id.editClassStartHour);
+        Spinner spinnerStartMinute = dialogView.findViewById(R.id.editClassStartMinute);
+        Spinner spinnerStartAm = dialogView.findViewById(R.id.editClassStartAm);
+        Spinner spinnerEndHour = dialogView.findViewById(R.id.editClassEndHour);
+        Spinner spinnerEndMinute = dialogView.findViewById(R.id.editClassEndMinute);
+        Spinner spinnerEndAm = dialogView.findViewById(R.id.editClassEndAm);
+        EditText editTextInstructors = dialogView.findViewById(R.id.editClassInstructor);
+        Button buttonSave = dialogView.findViewById(R.id.editClassButtonSave);
+        Button buttonCancel = dialogView.findViewById(R.id.editClassButtonCancel);
+
+        // Set current class information in the dialog fields
+        editTextCourseName.setText(classModel.getCourseName());
+        editTextInstructors.setText(classModel.getInstructors());
+
+        // Set selected values for start time
+        LocalTime startTime = classModel.getStartTime();
+        spinnerStartHour.setSelection(startTime.getHour());
+        spinnerStartMinute.setSelection(startTime.getMinute() / 15);
+        spinnerStartAm.setSelection(startTime.getHour() < 12 ? 0 : 1);
+
+        // Set selected values for end time
+        LocalTime endTime = classModel.getEndTime();
+        spinnerEndHour.setSelection(endTime.getHour());
+        spinnerEndMinute.setSelection(endTime.getMinute() / 15);
+        spinnerEndAm.setSelection(endTime.getHour() < 12 ? 0 : 1);
+
+        // Show the dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Set click listener for save button
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                // Update classModel with new information
+//                classModel.setCourseName(editTextCourseName.getText().toString());
+//                classModel.setStartTime(LocalTime.of(
+//                        Integer.parseInt(spinnerStartHour.getSelectedItem().toString()),
+//                        Integer.parseInt(spinnerStartMinute.getSelectedItem().toString())));
+//                classModel.setEndTime(LocalTime.of(
+//                        Integer.parseInt(spinnerEndHour.getSelectedItem().toString()),
+//                        Integer.parseInt(spinnerEndMinute.getSelectedItem().toString())));
+//                String ampmStart = spinnerStartAm.getSelectedItem().toString();
+//                String ampmEnd = spinnerEndAm.getSelectedItem().toString();
+//                classModel.setInstructors(editTextInstructors.getText().toString());
+//
+//                // Update the item in the classList at the corresponding position
+//                mClassList.set(position, classModel);
+//
+//                // Notify the adapter of the data change
+//                notifyDataSetChanged();
+//
+//                // Dismiss the dialog
+//                dialog.dismiss();
+                // Get selected values from spinners for start time
+                int startHour = Integer.parseInt(spinnerStartHour.getSelectedItem().toString());
+                int startMinute = Integer.parseInt(spinnerStartMinute.getSelectedItem().toString());
+                String startAmPm = spinnerStartAm.getSelectedItem().toString();
+
+                // Get selected values from spinners for end time
+                int endHour = Integer.parseInt(spinnerEndHour.getSelectedItem().toString());
+                int endMinute = Integer.parseInt(spinnerEndMinute.getSelectedItem().toString());
+                String endAmPm = spinnerEndAm.getSelectedItem().toString();
+
+                // Convert start time to LocalTime object
+                LocalTime startTime = LocalTime.of(startHour % 12 + (startAmPm.equals("PM") ? 12 : 0), startMinute);
+
+                // Convert end time to LocalTime object
+                LocalTime endTime = LocalTime.of(endHour % 12 + (endAmPm.equals("PM") ? 12 : 0), endMinute);
+
+                // Update classModel with new information
+                classModel.setCourseName(editTextCourseName.getText().toString());
+                classModel.setStartTime(startTime);
+                classModel.setEndTime(endTime);
+                classModel.setInstructors(editTextInstructors.getText().toString());
+
+                // Update the item in the classList at the corresponding position
+                mClassList.set(position, classModel);
+
+                // Notify the adapter of the data change
+                notifyDataSetChanged();
+
+                // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
+
+        // Set click listener for cancel button
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Dismiss the dialog
+                dialog.dismiss();
+            }
+        });
+    }
+
+    // Helper method to parse time string into LocalTime object
+    private LocalTime parseTime(String timeString) {
+        return LocalTime.parse(timeString, DateTimeFormatter.ofPattern("HH:mm"));
+    }
+
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override

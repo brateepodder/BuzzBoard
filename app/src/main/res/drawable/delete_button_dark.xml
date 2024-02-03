@@ -1,0 +1,15 @@
+<!-- edit_button_with_lines.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--    <item-->
+    <!--        android:drawable="@drawable/bubble_background"-->
+    <!--        android:gravity="center" />-->
+    <!-- Top line -->
+    <item
+        android:tint="@color/gatech_blue"
+        android:drawable="@drawable/ic_cross"
+        android:gravity="center" />
+
+    <!-- Middle line -->
+
+</layer-list>
