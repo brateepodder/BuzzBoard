@@ -136,7 +136,6 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
         View dialogView = LayoutInflater.from(mContext).inflate(R.layout.edit_class_dialog, null);
 
         // Find views within the dialog layout
-        // Find views within the dialog layout
         EditText editTextCourseName = dialogView.findViewById(R.id.editClassCourseName);
         Spinner spinnerStartHour = dialogView.findViewById(R.id.editClassStartHour);
         Spinner spinnerStartMinute = dialogView.findViewById(R.id.editClassStartMinute);
@@ -154,15 +153,20 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
 
         // Set selected values for start time
         LocalTime startTime = classModel.getStartTime();
-        spinnerStartHour.setSelection(startTime.getHour());
-        spinnerStartMinute.setSelection(startTime.getMinute() / 15);
-        spinnerStartAm.setSelection(startTime.getHour() < 12 ? 0 : 1);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a", Locale.US);
+        String startTimeString = startTime.format(formatter);
+        boolean isAM = startTimeString.endsWith("AM");
+        spinnerStartHour.setSelection(startTime.getHour() - 1);
+        spinnerStartMinute.setSelection(startTime.getMinute() / 5);
+        spinnerStartAm.setSelection(isAM ? 0 : 1);
 
         // Set selected values for end time
         LocalTime endTime = classModel.getEndTime();
-        spinnerEndHour.setSelection(endTime.getHour());
-        spinnerEndMinute.setSelection(endTime.getMinute() / 15);
-        spinnerEndAm.setSelection(endTime.getHour() < 12 ? 0 : 1);
+        String endTimeString = endTime.format(formatter);
+        boolean isAM2 = endTimeString.endsWith("AM");
+        spinnerEndHour.setSelection(endTime.getHour() - 1);
+        spinnerEndMinute.setSelection(endTime.getMinute() / 5);
+        spinnerEndAm.setSelection(isAM2 ? 0 : 1);
 
         // Show the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -174,26 +178,6 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                // Update classModel with new information
-//                classModel.setCourseName(editTextCourseName.getText().toString());
-//                classModel.setStartTime(LocalTime.of(
-//                        Integer.parseInt(spinnerStartHour.getSelectedItem().toString()),
-//                        Integer.parseInt(spinnerStartMinute.getSelectedItem().toString())));
-//                classModel.setEndTime(LocalTime.of(
-//                        Integer.parseInt(spinnerEndHour.getSelectedItem().toString()),
-//                        Integer.parseInt(spinnerEndMinute.getSelectedItem().toString())));
-//                String ampmStart = spinnerStartAm.getSelectedItem().toString();
-//                String ampmEnd = spinnerEndAm.getSelectedItem().toString();
-//                classModel.setInstructors(editTextInstructors.getText().toString());
-//
-//                // Update the item in the classList at the corresponding position
-//                mClassList.set(position, classModel);
-//
-//                // Notify the adapter of the data change
-//                notifyDataSetChanged();
-//
-//                // Dismiss the dialog
-//                dialog.dismiss();
                 // Get selected values from spinners for start time
                 int startHour = Integer.parseInt(spinnerStartHour.getSelectedItem().toString());
                 int startMinute = Integer.parseInt(spinnerStartMinute.getSelectedItem().toString());
@@ -210,14 +194,20 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
                 // Convert end time to LocalTime object
                 LocalTime endTime = LocalTime.of(endHour % 12 + (endAmPm.equals("PM") ? 12 : 0), endMinute);
 
+                // Remove the class from its current position in the list
+                mClassList.remove(position);
+
                 // Update classModel with new information
                 classModel.setCourseName(editTextCourseName.getText().toString());
                 classModel.setStartTime(startTime);
                 classModel.setEndTime(endTime);
                 classModel.setInstructors(editTextInstructors.getText().toString());
 
-                // Update the item in the classList at the corresponding position
-                mClassList.set(position, classModel);
+                // Add the updated class back into the list
+                mClassList.add(classModel);
+
+                // Sort the list
+                Collections.sort(mClassList);
 
                 // Notify the adapter of the data change
                 notifyDataSetChanged();
