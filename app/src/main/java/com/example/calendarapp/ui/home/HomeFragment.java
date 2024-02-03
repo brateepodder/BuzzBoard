@@ -63,11 +63,11 @@ public class HomeFragment extends Fragment {
         // Notify adapter about data change
         adapter.notifyDataSetChanged();
 
-//        classList.removeIf(classModel -> classModel.getCourseName().equals("ARBC1002"));
-//        classList.removeIf(classModel -> classModel.getCourseName().equals("MATH1554"));
-//
-//        // Notify adapter about the data change after removing classes
-//        adapter.notifyDataSetChanged();
+        classList.removeIf(classModel -> classModel.getCourseName().equals("ARBC1002"));
+        classList.removeIf(classModel -> classModel.getCourseName().equals("MATH1554"));
+
+        // Notify adapter about the data change after removing classes
+        adapter.notifyDataSetChanged();
 
 
         return root;
