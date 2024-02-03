@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/edit_popup">
 
     <EditText
         android:id="@+id/editClassCourseName"
@@ -37,10 +38,10 @@
     <Spinner
         android:id="@+id/editClassStartHour"
         android:layout_width="103dp"
-        android:prompt="@string/hour_starting_prompt"
-        android:entries="@array/hours"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
+        android:entries="@array/hours"
+        android:prompt="@string/hour_starting_prompt"
         app:layout_constraintBottom_toTopOf="@id/editClassEndTextView"
         app:layout_constraintEnd_toStartOf="@id/editClassStartMinute"
         app:layout_constraintHorizontal_bias="1.0"
@@ -62,10 +63,10 @@
 
     <Spinner
         android:id="@+id/editClassStartMinute"
-        android:layout_width="91dp"
-        android:layout_height="22dp"
-        android:entries="@array/minutes"
+        android:layout_width="108dp"
+        android:layout_height="24dp"
         android:layout_marginBottom="20dp"
+        android:entries="@array/minutes"
         app:layout_constraintBottom_toTopOf="@id/editClassEndTextView"
         app:layout_constraintEnd_toStartOf="@id/editClassStartAm"
         app:layout_constraintStart_toEndOf="@id/editClassStartHour"
@@ -99,10 +100,10 @@
 
     <Spinner
         android:id="@+id/editClassEndMinute"
-        android:layout_width="91dp"
-        android:layout_height="22dp"
-        android:entries="@array/minutes"
+        android:layout_width="104dp"
+        android:layout_height="27dp"
         android:layout_marginBottom="20dp"
+        android:entries="@array/minutes"
         app:layout_constraintBottom_toTopOf="@id/editClassInstructor"
         app:layout_constraintEnd_toStartOf="@id/editClassEndAm"
         app:layout_constraintStart_toEndOf="@id/editClassEndHour"
@@ -147,12 +148,12 @@
 
     <Button
         android:id="@+id/editClassButtonCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="56dp"
+        android:layout_height="45dp"
         android:background="@drawable/delete_button_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.636"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/editClassCourseName"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
