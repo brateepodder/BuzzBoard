@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
         public TextView daysTextView;
         public TextView instructorsTextView;
         public View classBubbleView; // Add a reference to the background view
+        public Button deleteButton;
 
 
         public ClassViewHolder(View itemView) {
@@ -49,6 +51,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
             daysTextView = itemView.findViewById(R.id.daysTextView);
             instructorsTextView = itemView.findViewById(R.id.instructorsTextView);
             classBubbleView = itemView.findViewById(R.id.bubble); // Initialize the reference
+            deleteButton = itemView.findViewById(R.id.class_delete_button); // Initialize delete button
         }
     }
 
@@ -64,11 +67,22 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(@NonNull ClassViewHolder holder, int position) {
+        //Delete button onClickListener
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Remove the corresponding class from the list
+                mClassList.remove(position);
+                // Notify adapter about the data change
+                notifyDataSetChanged();
+            }
+        });
+
         // Get the data model based on position
         Collections.sort(mClassList);
         ClassModel classModel = mClassList.get(position);
 
-        // Set item views based on your views and data model
+        // Set color of view
         holder.courseNameTextView.setText(classModel.getCourseName());
         holder.timeTextView.setText(classModel.getStartEndTimeAsString());
         holder.daysTextView.setText(classModel.getDaysAsString());
@@ -87,14 +101,14 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
                 R.color.bubble_10,
                 R.color.yellow
         ));
-    //!!Add a mod function to wrap around to pick colors in sequence
+
         // Calculate the color index based on the position
         int colorIndex = position % colorResources.size();
 
         // Get the color resource corresponding to the calculated index
         int selectedColorResource = colorResources.get(colorIndex);
 
-// Get the actual color integer value from the color resource
+        // Get the actual color integer value from the color resource
         int selectedColor = ContextCompat.getColor(mContext, selectedColorResource);
 
         Drawable backgroundDrawable = ContextCompat.getDrawable(mContext, R.drawable.class_bubble);

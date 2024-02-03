@@ -10,4 +10,48 @@
     <string name="menu_classes">Classes</string>
     <string name="menu_assignments">Assignments</string>
     <string name="menu_exams">Exams</string>
+    <string name="enter_professor_name">Enter Professor Name</string>
+
+    <string-array name="hours">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+
+    <string-array name="minutes">
+        <item>0</item>
+        <item>5</item>
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+        <item>35</item>
+        <item>40</item>
+        <item>45</item>
+        <item>50</item>
+        <item>55</item>
+        <item>60</item>
+    </string-array>
+
+    <string-array name="ampm">
+        <item>0</item>
+        <item>AM</item>
+        <item>PM</item>
+    </string-array>
+
+    <string name="am_pm_prompt">a.m or p.m</string>
+    <string name="hour_starting_prompt">Enter starting hour</string>
+    <string name="minute_starting_prompt">Enter starting minute</string>
+    <string name="minute_ending_prompt">Enter ending minute</string>
+    <string name="hour_ending_prompt">Enter ending hour</string>
 </resources>
