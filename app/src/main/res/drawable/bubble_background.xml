@@ -3,12 +3,11 @@
     android:shape="oval">
 
     <!-- Background color of the circle -->
-    <solid android:color="#003057" />
+    <solid android:color="@color/gatech_blue" />
 
     <!-- Define the size of the circle -->
     <size
         android:width="48dp"
-        android:height="48dp
-" />
+        android:height="48dp" />
 
 </shape>

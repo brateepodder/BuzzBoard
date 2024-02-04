@@ -1,10 +1,14 @@
 package com.example.calendarapp.ui.home;
 
+import android.app.AlertDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 
@@ -31,6 +35,8 @@ public class HomeFragment extends Fragment {
     private ClassListAdapter adapter;
     private List<ClassModel> classList;
     private FragmentHomeBinding binding;
+    private Button addButton;
+    private View dialogView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -62,7 +68,91 @@ public class HomeFragment extends Fragment {
         // Notify adapter about data change
         adapter.notifyDataSetChanged();
 
+        Button addButton = root.findViewById(R.id.floatingActionButton);
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.edit_class_dialog, null);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Call the method to show the edit dialog without prepopulating data
+                showEmptyEditDialog(dialogView);
+            }
+        });
+
         return root;
+    }
+
+    // Method to show the edit dialog without prepopulating data
+    private void showEmptyEditDialog(View dialogView) {
+        // Find views within the dialog layout
+        EditText editTextCourseName = dialogView.findViewById(R.id.editClassCourseName);
+        Spinner spinnerStartHour = dialogView.findViewById(R.id.editClassStartHour);
+        Spinner spinnerStartMinute = dialogView.findViewById(R.id.editClassStartMinute);
+        Spinner spinnerStartAm = dialogView.findViewById(R.id.editClassStartAm);
+        Spinner spinnerEndHour = dialogView.findViewById(R.id.editClassEndHour);
+        Spinner spinnerEndMinute = dialogView.findViewById(R.id.editClassEndMinute);
+        Spinner spinnerEndAm = dialogView.findViewById(R.id.editClassEndAm);
+        EditText editTextInstructors = dialogView.findViewById(R.id.editClassInstructor);
+        Button buttonSave = dialogView.findViewById(R.id.editClassButtonSave);
+        Button buttonCancel = dialogView.findViewById(R.id.editClassButtonCancel);
+
+        // Show the dialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
+        builder.setView(dialogView);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        // Set click listener for save button
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Get selected values from spinners for start time
+                int startHour = Integer.parseInt(spinnerStartHour.getSelectedItem().toString());
+                int startMinute = Integer.parseInt(spinnerStartMinute.getSelectedItem().toString());
+                String startAmPm = spinnerStartAm.getSelectedItem().toString();
+
+                // Get selected values from spinners for end time
+                int endHour = Integer.parseInt(spinnerEndHour.getSelectedItem().toString());
+                int endMinute = Integer.parseInt(spinnerEndMinute.getSelectedItem().toString());
+                String endAmPm = spinnerEndAm.getSelectedItem().toString();
+
+                // Convert start time to LocalTime object
+                LocalTime startTime = LocalTime.of(startHour % 12 + (startAmPm.equals("PM") ? 12 : 0), startMinute);
+                String courseName = editTextCourseName.getText().toString();
+
+                // Convert end time to LocalTime object
+                LocalTime endTime = LocalTime.of(endHour % 12 + (endAmPm.equals("PM") ? 12 : 0), endMinute);
+
+                ClassModel classModel = new ClassModel(courseName, )
+
+                // Remove the class from its current position in the list
+                int index = mClassList.indexOf(classModel);
+                if (index != -1) {
+                    // Remove the class from its current position in the list
+                    removeItem(index);
+
+                    // Update classModel with new information
+                    classModel.setCourseName(editTextCourseName.getText().toString());
+                    classModel.setStartTime(startTime);
+                    classModel.setEndTime(endTime);
+                    classModel.setInstructors(editTextInstructors.getText().toString());
+
+                    // Add the updated class back into the list
+                    mClassList.add(classModel);
+
+                    // Notify the adapter of the data change
+                    notifyDataSetChanged();
+            }
+        });
+
+        // Set click listener for cancel button
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle cancel button click
+                dialog.dismiss();
+            }
+        });
     }
 
     @Override

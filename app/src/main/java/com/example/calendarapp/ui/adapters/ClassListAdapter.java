@@ -88,9 +88,8 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
             @Override
             public void onClick(View v) {
                 // Remove the corresponding class from the list
-                mClassList.remove(position);
-                // Notify adapter about the data change
-                notifyDataSetChanged();
+                int currentPosition = holder.getAdapterPosition();
+                removeItem(currentPosition);
             }
         });
 
@@ -216,7 +215,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
                 int index = mClassList.indexOf(classModel);
                 if (index != -1) {
                     // Remove the class from its current position in the list
-                    mClassList.remove(index);
+                    removeItem(index);
 
                     // Update classModel with new information
                     classModel.setCourseName(editTextCourseName.getText().toString());
@@ -256,5 +255,9 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
     @Override
     public int getItemCount() {
         return mClassList.size();
+    }
+    public void removeItem(int position) {
+        mClassList.remove(position);
+        notifyItemRemoved(position);
     }
 }
