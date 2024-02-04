@@ -3,6 +3,8 @@ package com.example.calendarapp;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.time.format.TextStyle;
 
@@ -83,6 +85,40 @@ public class ClassModel implements Comparable<ClassModel>{
         }
 
         return daysStringBuilder.toString();
+    }
+
+    public List<Integer> getDaysAsIntegers() {
+        List<Integer> dayIntegers = new ArrayList<>();
+        for (DayOfWeek day : days) {
+            // Map DayOfWeek enum values to integers (e.g., Sunday = 0, Monday = 1, etc.)
+            switch (day) {
+                case SUNDAY:
+                    dayIntegers.add(0);
+                    break;
+                case MONDAY:
+                    dayIntegers.add(1);
+                    break;
+                case TUESDAY:
+                    dayIntegers.add(2);
+                    break;
+                case WEDNESDAY:
+                    dayIntegers.add(3);
+                    break;
+                case THURSDAY:
+                    dayIntegers.add(4);
+                    break;
+                case FRIDAY:
+                    dayIntegers.add(5);
+                    break;
+                case SATURDAY:
+                    dayIntegers.add(6);
+                    break;
+                default:
+                    // Handle unexpected cases
+                    break;
+            }
+        }
+        return dayIntegers;
     }
 
     public void setDays(DayOfWeek[] days) {

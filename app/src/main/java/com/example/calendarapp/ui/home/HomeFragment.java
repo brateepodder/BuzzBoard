@@ -3,11 +3,13 @@ package com.example.calendarapp.ui.home;
 import android.app.AlertDialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -35,8 +37,6 @@ public class HomeFragment extends Fragment {
     private ClassListAdapter adapter;
     private List<ClassModel> classList;
     private FragmentHomeBinding binding;
-    private Button addButton;
-    private View dialogView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -69,11 +69,11 @@ public class HomeFragment extends Fragment {
         adapter.notifyDataSetChanged();
 
         Button addButton = root.findViewById(R.id.floatingActionButton);
-        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.edit_class_dialog, null);
-
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.edit_class_dialog, null);
+
                 // Call the method to show the edit dialog without prepopulating data
                 showEmptyEditDialog(dialogView);
             }
@@ -95,6 +95,8 @@ public class HomeFragment extends Fragment {
         EditText editTextInstructors = dialogView.findViewById(R.id.editClassInstructor);
         Button buttonSave = dialogView.findViewById(R.id.editClassButtonSave);
         Button buttonCancel = dialogView.findViewById(R.id.editClassButtonCancel);
+        ListView dayListView = dialogView.findViewById(R.id.editClassDayDropdown);
+        dayListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         // Show the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
@@ -123,25 +125,26 @@ public class HomeFragment extends Fragment {
                 // Convert end time to LocalTime object
                 LocalTime endTime = LocalTime.of(endHour % 12 + (endAmPm.equals("PM") ? 12 : 0), endMinute);
 
-                ClassModel classModel = new ClassModel(courseName, )
+                // Get selected days from the ListView
+                SparseBooleanArray checkedItems = dayListView.getCheckedItemPositions();
+                List<DayOfWeek> selectedDays = new ArrayList<>();
+                for (int i = 0; i < checkedItems.size(); i++) {
+                    if (checkedItems.valueAt(i)) {
+                        int position = checkedItems.keyAt(i);
+                        // Convert position to DayOfWeek enum value (Sunday is 0, Monday is 1, etc.)
+                        DayOfWeek day = DayOfWeek.of(position + 1);
+                        selectedDays.add(day);
+                    }
+                }
 
-                // Remove the class from its current position in the list
-                int index = mClassList.indexOf(classModel);
-                if (index != -1) {
-                    // Remove the class from its current position in the list
-                    removeItem(index);
+                // Update the days of the week for classModel
+                DayOfWeek[] days = selectedDays.toArray(new DayOfWeek[selectedDays.size()]);
 
-                    // Update classModel with new information
-                    classModel.setCourseName(editTextCourseName.getText().toString());
-                    classModel.setStartTime(startTime);
-                    classModel.setEndTime(endTime);
-                    classModel.setInstructors(editTextInstructors.getText().toString());
+                ClassModel classModel = new ClassModel(editTextCourseName.getText().toString(), startTime, endTime, days, editTextInstructors.getText().toString());
 
-                    // Add the updated class back into the list
-                    mClassList.add(classModel);
-
-                    // Notify the adapter of the data change
-                    notifyDataSetChanged();
+                classList.add(classModel);
+                adapter.notifyDataSetChanged();
+                dialog.dismiss();
             }
         });
 

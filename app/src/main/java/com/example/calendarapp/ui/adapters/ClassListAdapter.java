@@ -3,12 +3,14 @@ package com.example.calendarapp.ui.adapters;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.calendarapp.ClassModel;
 import com.example.calendarapp.R;
 
+import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -145,10 +148,27 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
         EditText editTextInstructors = dialogView.findViewById(R.id.editClassInstructor);
         Button buttonSave = dialogView.findViewById(R.id.editClassButtonSave);
         Button buttonCancel = dialogView.findViewById(R.id.editClassButtonCancel);
+        ListView dayListView = dialogView.findViewById(R.id.editClassDayDropdown);
+        dayListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         // Set current class information in the dialog fields
         editTextCourseName.setText(classModel.getCourseName());
         editTextInstructors.setText(classModel.getInstructors());
+
+//        // Determine the positions of these days in the array of days of the week
+//        List<Integer> classDays = classModel.getDaysAsIntegers();
+//        SparseBooleanArray checkedItems = new SparseBooleanArray();
+//        String[] daysOfWeek = mContext.getResources().getStringArray(R.array.days_of_week);
+//        for (int i = 0; i < daysOfWeek.length; i++) {
+//            if (classDays.contains(i)) {
+//                checkedItems.put(i, true);
+//            }
+//        }
+//
+//        // Set the checked state of the corresponding items in the ListView
+//        for (int i = 0; i < dayListView.getCount(); i++) {
+//            dayListView.setItemChecked(i, checkedItems.get(i));
+//        }
 
         // Set selected values for start time
         LocalTime startTime = classModel.getStartTime();
@@ -181,7 +201,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
         }
 
         int spinnerSelection2 = (endHour == 12) ? 11 : (endHour - 1);
-        spinnerStartHour.setSelection(spinnerSelection2);
+        spinnerEndHour.setSelection(spinnerSelection2);
         spinnerEndMinute.setSelection(endTime.getMinute() / 5);
         spinnerEndAm.setSelection(isAM2 ? 0 : 1);
 
@@ -210,6 +230,23 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
 
                 // Convert end time to LocalTime object
                 LocalTime endTime = LocalTime.of(endHour % 12 + (endAmPm.equals("PM") ? 12 : 0), endMinute);
+
+                // Get selected days from the ListView
+                SparseBooleanArray checkedItems = dayListView.getCheckedItemPositions();
+                List<DayOfWeek> selectedDays = new ArrayList<>();
+                for (int i = 0; i < checkedItems.size(); i++) {
+                    if (checkedItems.valueAt(i)) {
+                        // Get the position of the checked item
+                        int position = checkedItems.keyAt(i);
+                        // Map the position to the corresponding DayOfWeek enum value
+                        DayOfWeek day = DayOfWeek.values()[position];
+                        // Add the DayOfWeek enum value to the selectedDays list
+                        selectedDays.add(day);
+                    }
+                }
+
+                // Update the days of the week for classModel
+                classModel.setDays(selectedDays.toArray(new DayOfWeek[selectedDays.size()]));
 
                 // Remove the class from its current position in the list
                 int index = mClassList.indexOf(classModel);
