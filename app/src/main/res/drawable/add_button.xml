@@ -1,0 +1,12 @@
+<!-- combined_drawable.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Background -->
+    <item android:drawable="@drawable/bubble_background"/>
+
+    <!-- Plus Icon -->
+    <item
+        android:drawable="@drawable/ic_plus"
+        android:gravity="center"/>
+
+</layer-list>
