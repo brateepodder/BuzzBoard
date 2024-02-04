@@ -59,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/editClassStartMinute"
         app:layout_constraintTop_toBottomOf="@+id/editClassStartTextView"
-        app:layout_constraintVertical_bias="0.588" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Spinner
         android:id="@+id/editClassStartMinute"
@@ -71,7 +71,7 @@
         app:layout_constraintEnd_toStartOf="@id/editClassStartAm"
         app:layout_constraintStart_toEndOf="@id/editClassStartHour"
         app:layout_constraintTop_toBottomOf="@id/editClassStartTextView"
-        app:layout_constraintVertical_bias="0.592" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <ListView
         android:id="@+id/editClassDayDropdown"
@@ -119,7 +119,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/editClassEndMinute"
         app:layout_constraintTop_toBottomOf="@id/editClassCourseName"
-        app:layout_constraintVertical_bias="0.845" />
+        app:layout_constraintVertical_bias="0.934" />
 
     <Spinner
         android:id="@+id/editClassEndMinute"
@@ -131,7 +131,7 @@
         app:layout_constraintEnd_toStartOf="@id/editClassEndAm"
         app:layout_constraintStart_toEndOf="@id/editClassEndHour"
         app:layout_constraintTop_toBottomOf="@+id/editClassEndTextView"
-        app:layout_constraintVertical_bias="0.526" />
+        app:layout_constraintVertical_bias="0.642" />
 
     <EditText
         android:id="@+id/editClassInstructor"
