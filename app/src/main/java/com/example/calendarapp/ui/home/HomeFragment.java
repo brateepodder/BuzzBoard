@@ -3,6 +3,7 @@ package com.example.calendarapp.ui.home;
 import android.app.AlertDialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -24,9 +26,9 @@ import com.example.calendarapp.ClassModel;
 import com.example.calendarapp.databinding.FragmentHomeBinding;
 import com.example.calendarapp.ui.adapters.ClassListAdapter;
 import com.example.calendarapp.R;
+import com.example.calendarapp.ui.adapters.DaysOfWeekAdapter;
 
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -82,8 +84,16 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    // Method to convert position in the list to DayOfWeek enum
+    private DayOfWeek convertPositionToDayOfWeek(int position) {
+        // Since DayOfWeek starts from MONDAY (1) to SUNDAY (7), add 1 to the position
+        return DayOfWeek.of(position + 1);
+    }
+
     // Method to show the edit dialog without prepopulating data
     private void showEmptyEditDialog(View dialogView) {
+        Log.d("Method running:", "showEmptyEditDialog.");
+
         // Find views within the dialog layout
         EditText editTextCourseName = dialogView.findViewById(R.id.editClassCourseName);
         Spinner spinnerStartHour = dialogView.findViewById(R.id.editClassStartHour);
@@ -95,14 +105,26 @@ public class HomeFragment extends Fragment {
         EditText editTextInstructors = dialogView.findViewById(R.id.editClassInstructor);
         Button buttonSave = dialogView.findViewById(R.id.editClassButtonSave);
         Button buttonCancel = dialogView.findViewById(R.id.editClassButtonCancel);
-        ListView dayListView = dialogView.findViewById(R.id.editClassDayDropdown);
-        dayListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        ScrollView scrollView = dialogView.findViewById(R.id.editClassDayDropdown);
+
+        // Inflate the days_of_week_list.xml layout
+        View daysOfWeekListViewLayout = LayoutInflater.from(getContext()).inflate(R.layout.days_of_week_list, null);
+        ListView daysOfWeekListView = daysOfWeekListViewLayout.findViewById(R.id.daysOfWeekListView);
+
+        // Set adapter for the ListView
+        DaysOfWeekAdapter dayAdapter = new DaysOfWeekAdapter(getContext(), R.layout.day_of_week_item, getResources().getStringArray(R.array.days_of_week));
+        daysOfWeekListView.setAdapter(dayAdapter);
+
+        // Add the daysOfWeekListViewLayout to the scrollView
+        scrollView.addView(daysOfWeekListViewLayout);
 
         // Show the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
         dialog.show();
+
+        List<DayOfWeek> selectedDaysList = new ArrayList<>();
 
         // Set click listener for save button
         buttonSave.setOnClickListener(new View.OnClickListener() {
@@ -124,21 +146,8 @@ public class HomeFragment extends Fragment {
 
                 // Convert end time to LocalTime object
                 LocalTime endTime = LocalTime.of(endHour % 12 + (endAmPm.equals("PM") ? 12 : 0), endMinute);
+                DayOfWeek[] days = dayAdapter.getSelectedDaysArray();
 
-                // Get selected days from the ListView
-                SparseBooleanArray checkedItems = dayListView.getCheckedItemPositions();
-                List<DayOfWeek> selectedDays = new ArrayList<>();
-                for (int i = 0; i < checkedItems.size(); i++) {
-                    if (checkedItems.valueAt(i)) {
-                        int position = checkedItems.keyAt(i);
-                        // Convert position to DayOfWeek enum value (Sunday is 0, Monday is 1, etc.)
-                        DayOfWeek day = DayOfWeek.of(position + 1);
-                        selectedDays.add(day);
-                    }
-                }
-
-                // Update the days of the week for classModel
-                DayOfWeek[] days = selectedDays.toArray(new DayOfWeek[selectedDays.size()]);
 
                 ClassModel classModel = new ClassModel(editTextCourseName.getText().toString(), startTime, endTime, days, editTextInstructors.getText().toString());
 
