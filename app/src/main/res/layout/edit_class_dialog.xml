@@ -13,7 +13,6 @@
         android:id="@+id/editClassCourseName"
         android:layout_width="231dp"
         android:layout_height="44dp"
-        android:layout_marginBottom="20dp"
         android:hint="Course Name"
         app:layout_constraintBottom_toTopOf="@id/editClassStartTextView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +25,7 @@
         android:id="@+id/editClassStartTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
         android:text="Start Time:"
         app:layout_constraintBottom_toTopOf="@id/editClassStartHour"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,11 +34,22 @@
         app:layout_constraintTop_toBottomOf="@id/editClassCourseName"
         app:layout_constraintVertical_bias="0.377" />
 
+    <!--    <ListView-->
+<!--        android:id="@+id/editClassDayDropdown"-->
+<!--        android:layout_width="250dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:entries="@array/days_of_week"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/editClassButtonSave"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/editClassInstructor"-->
+<!--        app:layout_constraintVertical_bias="0.0" />-->
+
     <Spinner
         android:id="@+id/editClassStartHour"
         android:layout_width="103dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
         android:entries="@array/hours"
         android:prompt="@string/hour_starting_prompt"
         app:layout_constraintBottom_toTopOf="@id/editClassEndTextView"
@@ -50,45 +60,33 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
-        android:id="@+id/editClassStartAm"
-        android:layout_width="103dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="20dp"
-        android:entries="@array/ampm"
-        app:layout_constraintBottom_toTopOf="@id/editClassEndTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/editClassStartMinute"
-        app:layout_constraintTop_toBottomOf="@+id/editClassStartTextView"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <Spinner
         android:id="@+id/editClassStartMinute"
         android:layout_width="108dp"
         android:layout_height="24dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
         android:entries="@array/minutes"
         app:layout_constraintBottom_toTopOf="@id/editClassEndTextView"
         app:layout_constraintEnd_toStartOf="@id/editClassStartAm"
         app:layout_constraintStart_toEndOf="@id/editClassStartHour"
         app:layout_constraintTop_toBottomOf="@id/editClassStartTextView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.555" />
 
-    <ListView
-        android:id="@+id/editClassDayDropdown"
-        android:layout_width="250dp"
-        android:layout_height="100dp"
-        android:entries="@array/days_of_week"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/editClassButtonSave"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editClassInstructor"
-        app:layout_constraintVertical_bias="0.0" />
+    <Spinner
+        android:id="@+id/editClassStartAm"
+        android:layout_width="103dp"
+        android:layout_height="25dp"
+        android:entries="@array/ampm"
+        app:layout_constraintBottom_toTopOf="@id/editClassEndTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/editClassStartMinute"
+        app:layout_constraintTop_toBottomOf="@+id/editClassStartTextView"
+        app:layout_constraintVertical_bias="0.517" />
 
     <TextView
         android:id="@+id/editClassEndTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
         android:text="End Time:"
         app:layout_constraintBottom_toTopOf="@id/editClassEndHour"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +99,7 @@
         android:id="@+id/editClassEndHour"
         android:layout_width="103dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
         android:entries="@array/hours"
         android:prompt="@string/hour_ending_prompt"
         app:layout_constraintBottom_toTopOf="@id/editClassInstructor"
@@ -110,38 +108,38 @@
         app:layout_constraintTop_toBottomOf="@id/editClassEndTextView" />
 
     <Spinner
-        android:id="@+id/editClassEndAm"
-        android:layout_width="103dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="20dp"
-        android:entries="@array/ampm"
-        app:layout_constraintBottom_toTopOf="@+id/editClassInstructor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/editClassEndMinute"
-        app:layout_constraintTop_toBottomOf="@id/editClassCourseName"
-        app:layout_constraintVertical_bias="0.934" />
-
-    <Spinner
         android:id="@+id/editClassEndMinute"
         android:layout_width="104dp"
         android:layout_height="27dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="5dp"
         android:entries="@array/minutes"
         app:layout_constraintBottom_toTopOf="@id/editClassInstructor"
         app:layout_constraintEnd_toStartOf="@id/editClassEndAm"
         app:layout_constraintStart_toEndOf="@id/editClassEndHour"
         app:layout_constraintTop_toBottomOf="@+id/editClassEndTextView"
-        app:layout_constraintVertical_bias="0.642" />
+        app:layout_constraintVertical_bias="0.52" />
+
+    <Spinner
+        android:id="@+id/editClassEndAm"
+        android:layout_width="103dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="5dp"
+        android:entries="@array/ampm"
+        app:layout_constraintBottom_toTopOf="@+id/editClassInstructor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/editClassEndMinute"
+        app:layout_constraintTop_toBottomOf="@id/editClassCourseName"
+        app:layout_constraintVertical_bias="0.878" />
 
     <EditText
         android:id="@+id/editClassInstructor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
         android:hint="Instructors"
         app:layout_constraintBottom_toTopOf="@id/editClassDayDropdown"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editClassEndHour"
         app:layout_constraintVertical_bias="0.236" />
@@ -170,6 +168,32 @@
         app:layout_constraintStart_toEndOf="@+id/editClassCourseName"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ScrollView
+        android:id="@+id/editClassDayDropdown"
+        android:layout_width="250dp"
+        android:layout_height="80dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/editClassButtonSave"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editClassInstructor">
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/editClassDays"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:text="Days:"
+        app:layout_constraintBottom_toTopOf="@+id/editClassDayDropdown"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.046"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editClassInstructor"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
