@@ -1,4 +1,4 @@
-package com.example.calendarapp;
+package com.example.calendarapp.ui.models;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Locale;
 import java.time.format.TextStyle;
 
-public class ClassModel implements Comparable<ClassModel>{
+public class ClassModel implements Comparable<ClassModel> {
     private String courseName;
     private LocalTime startTime;
     private LocalTime endTime;

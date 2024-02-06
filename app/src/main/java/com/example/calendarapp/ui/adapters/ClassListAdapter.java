@@ -1,15 +1,10 @@
 package com.example.calendarapp.ui.adapters;
 
-import static java.security.AccessController.getContext;
-
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -21,10 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.calendarapp.ClassModel;
+import com.example.calendarapp.ui.models.ClassModel;
 import com.example.calendarapp.R;
 
-import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -37,13 +31,21 @@ import androidx.appcompat.app.AlertDialog;
 
 public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.ClassViewHolder> {
 
-    private Context mContext; // Context reference
+    private Context mContext;
     private List<ClassModel> mClassList; // List of class models
 
     // Constructor
     public ClassListAdapter(Context context, List<ClassModel> classList) {
-        mContext = context; // Initialize Context reference
-        mClassList = classList; // Initialize list of class models
+        mContext = context;
+        mClassList = classList;
+    }
+
+    public List<ClassModel> getClassList() {
+        return this.mClassList;
+    }
+
+    public void setClassList(List<ClassModel> classList) {
+        mClassList = classList;
     }
 
     // ViewHolder class
@@ -62,7 +64,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
             courseNameTextView = itemView.findViewById(R.id.courseNameTextView);
             timeTextView = itemView.findViewById(R.id.timeTextView);
             daysTextView = itemView.findViewById(R.id.daysTextView);
-            instructorsTextView = itemView.findViewById(R.id.instructorsTextView);
+            instructorsTextView = itemView.findViewById(R.id.assignmentsAssociatedCourse);
             classBubbleView = itemView.findViewById(R.id.bubble); // Initialize the reference
             deleteButton = itemView.findViewById(R.id.class_delete_button); // Initialize delete button
             editButton = itemView.findViewById(R.id.class_edit_button);
@@ -89,7 +91,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
             }
         });
 
-        //Delete button onClickListener
+        // Delete button onClickListener
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,12 +105,13 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
         Collections.sort(mClassList);
         ClassModel classModel = mClassList.get(position);
 
-        // Set color of view
+        // Set information of view
         holder.courseNameTextView.setText(classModel.getCourseName());
         holder.timeTextView.setText(classModel.getStartEndTimeAsString());
         holder.daysTextView.setText(classModel.getDaysAsString());
         holder.instructorsTextView.setText(classModel.getInstructors());
 
+        // Set color of view
         ArrayList<Integer> colorResources = new ArrayList<>(Arrays.asList(
                 R.color.bubble_1,
                 R.color.bubble_2,
@@ -279,6 +282,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
     public int getItemCount() {
         return mClassList.size();
     }
+
     public void removeItem(int position) {
         mClassList.remove(position);
         notifyItemRemoved(position);
