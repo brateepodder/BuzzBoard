@@ -92,6 +92,7 @@ public class AssignmentsListAdapter extends RecyclerView.Adapter<AssignmentsList
         holder.assignmentNote.setText(assignment.getNote());
 
         ArrayList<Integer> colorResources = new ArrayList<>(Arrays.asList(
+                R.color.yellow,
                 R.color.bubble_1,
                 R.color.bubble_2,
                 R.color.bubble_3,
@@ -101,8 +102,7 @@ public class AssignmentsListAdapter extends RecyclerView.Adapter<AssignmentsList
                 R.color.bubble_7,
                 R.color.bubble_8,
                 R.color.bubble_9,
-                R.color.bubble_10,
-                R.color.yellow
+                R.color.bubble_10
         ));
 
         // Calculate the color index based on the position

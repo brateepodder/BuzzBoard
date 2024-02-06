@@ -66,7 +66,6 @@ public class GalleryFragment extends Fragment {
     }
 
     private void showEditDialog(View dialogView) {
-        // Find views within the edit_assignment_dialog layout
         EditText editAssignmentName = dialogView.findViewById(R.id.editAssignmentName);
         Spinner editAssignmentDueHour = dialogView.findViewById(R.id.editExamDay);
         Spinner editAssignmentDueMinute = dialogView.findViewById(R.id.editExamMinute);
@@ -78,7 +77,6 @@ public class GalleryFragment extends Fragment {
         Button buttonSave = dialogView.findViewById(R.id.editExamButtonSave);
         Button buttonCancel = dialogView.findViewById(R.id.editAssignmentButtonCancel);
 
-        //Popup the edit_assignment_dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
@@ -86,14 +84,12 @@ public class GalleryFragment extends Fragment {
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get selected values from spinners for start time
                 int dueHour = Integer.parseInt(editAssignmentDueHour.getSelectedItem().toString());
                 int dueMinute = Integer.parseInt(editAssignmentDueMinute.getSelectedItem().toString());
                 String dueAmPm = editAssignmentDueAm.getSelectedItem().toString();
                 int dueDay = editAssignmentDueDay.getSelectedItemPosition() + 1;
                 int dueMonth = editAssignmentDueMonth.getSelectedItemPosition() + 1;
 
-                // Convert the AM/PM string to 24-hour format
                 if (dueAmPm.equals("PM")) {
                     if (dueHour < 12) {
                         dueHour += 12;
@@ -104,30 +100,25 @@ public class GalleryFragment extends Fragment {
                     }
                 }
 
-                //Get the current year and create a LocalDateTime instance
                 LocalDateTime currentDateTime = LocalDateTime.now();
                 int currentYear = currentDateTime.getYear();
 
                 LocalDateTime dueDateTime = LocalDateTime.of(currentYear, dueMonth, dueDay, dueHour, dueMinute);
 
-                //Get assignment name, note & class from editText views
                 String associatedClass = editAssignmentAssociatedClass.getText().toString();
                 String assignmentName = editAssignmentName.getText().toString();
                 String assignmentNote = editAssignmentNote.getText().toString();
 
-                //Create new assignment, add to assignmentList, notify of change
                 AssignmentModel assignment = new AssignmentModel(assignmentName, dueDateTime, associatedClass, assignmentNote);
                 assignmentList.add(assignment);
                 adapter.notifyDataSetChanged();
 
-                // Dismiss the dialog
                 dialog.dismiss();
             }
         });
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle cancel button click
                 dialog.dismiss();
             }
         });

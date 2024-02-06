@@ -14,12 +14,23 @@
         android:layout_width="231dp"
         android:layout_height="44dp"
         android:hint="Course Name"
-        app:layout_constraintBottom_toTopOf="@id/editClassStartTextView"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
+
+    <!--    <ListView-->
+<!--        android:id="@+id/editClassDayDropdown"-->
+<!--        android:layout_width="250dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:entries="@array/days_of_week"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/editClassButtonSave"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/editClassInstructor"-->
+<!--        app:layout_constraintVertical_bias="0.0" />-->
 
     <TextView
         android:id="@+id/editClassStartTextView"
@@ -33,17 +44,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editClassCourseName"
         app:layout_constraintVertical_bias="0.377" />
-
-    <!--    <ListView-->
-<!--        android:id="@+id/editClassDayDropdown"-->
-<!--        android:layout_width="250dp"-->
-<!--        android:layout_height="100dp"-->
-<!--        android:entries="@array/days_of_week"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toStartOf="@id/editClassButtonSave"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/editClassInstructor"-->
-<!--        app:layout_constraintVertical_bias="0.0" />-->
 
     <Spinner
         android:id="@+id/editClassStartHour"
@@ -135,8 +135,10 @@
         android:id="@+id/editClassInstructor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:hint="Instructors"
+        android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/editClassDayDropdown"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -149,13 +151,15 @@
         android:layout_width="48dp"
         android:layout_height="46dp"
         android:layout_marginStart="30dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="20dp"
         android:background="@drawable/save_button_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/editClassDayDropdown"
         app:layout_constraintTop_toBottomOf="@+id/editClassInstructor"
-        app:layout_constraintVertical_bias="0.513" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/editClassButtonCancel"
@@ -172,7 +176,8 @@
     <ScrollView
         android:id="@+id/editClassDayDropdown"
         android:layout_width="250dp"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="5dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/editClassButtonSave"

@@ -157,21 +157,23 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a", Locale.US);
         String startTimeString = startTime.format(formatter);
         boolean isAM = startTimeString.endsWith("AM");
+
         int startHour = startTime.getHour();
         if (startHour == 0) {
             startHour = 12;
         } else if (startHour > 12) {
             startHour -= 12;
         }
-
         int spinnerSelection = (startHour == 12) ? 11 : (startHour - 1);
         spinnerStartHour.setSelection(spinnerSelection);
         spinnerStartMinute.setSelection(startTime.getMinute() / 5);
         spinnerStartAm.setSelection(isAM ? 0 : 1);
+
         LocalTime endTime = classModel.getEndTime();
         String endTimeString = endTime.format(formatter);
         boolean isAM2 = endTimeString.endsWith("AM");
-        int endHour = startTime.getHour();
+
+        int endHour = endTime.getHour();
         if (endHour == 0) {
             endHour = 12;
         } else if (endHour > 12) {

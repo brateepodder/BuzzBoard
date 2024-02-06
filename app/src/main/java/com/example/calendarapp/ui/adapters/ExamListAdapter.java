@@ -86,6 +86,7 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ExamVi
         holder.examNoteTimeView.setText(exam.getNote());
 
         ArrayList<Integer> colorResources = new ArrayList<>(Arrays.asList(
+                R.color.yellow,
                 R.color.bubble_1,
                 R.color.bubble_2,
                 R.color.bubble_3,
@@ -95,8 +96,7 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ExamVi
                 R.color.bubble_7,
                 R.color.bubble_8,
                 R.color.bubble_9,
-                R.color.bubble_10,
-                R.color.yellow
+                R.color.bubble_10
         ));
 
         // Calculate the color index based on the position
@@ -118,10 +118,8 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ExamVi
     }
 
     private void showEditDialog(ExamModel exam, int position) {
-        // Inflate the dialog layout
         View dialogView = LayoutInflater.from(mContext).inflate(R.layout.edit_exam_dialog, null);
 
-        // Find views within the dialog layout
         EditText editExamName = dialogView.findViewById(R.id.editExamName);
         Spinner editExamHour = dialogView.findViewById(R.id.editExamHour);
         Spinner editExamMinute = dialogView.findViewById(R.id.editExamMinute);
@@ -133,58 +131,49 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ExamVi
         Button buttonSave = dialogView.findViewById(R.id.editExamButtonSave);
         Button buttonCancel = dialogView.findViewById(R.id.editExamButtonCancel);
 
-        //Set assignment editText name, note & associated class
         editExamName.setText(exam.getName());
         editExamNote.setText(exam.getNote());
         editExamLocation.setText(exam.getLocation());
 
-        //Set spinner's due hour, minute, am & day, month
         editExamHour.setSelection(exam.getHourIn12HourFormat() - 1);
         editExamMinute.setSelection(exam.getMinute() / 5);
         editExamAm.setSelection(exam.getAmPm().equals("AM") ? 0 : 1);
         editExamDay.setSelection(exam.getDayAsInt() - 1);
         editExamMonth.setSelection(exam.getMonthAsInt() - 1);
 
-        // Show the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        // Set click listener for save button
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get selected values from spinners for start time
-                int dueHour = Integer.parseInt(editExamHour.getSelectedItem().toString());
-                int dueMinute = Integer.parseInt(editExamMinute.getSelectedItem().toString());
-                String dueAmPm = editExamAm.getSelectedItem().toString();
-                int dueDay = editExamDay.getSelectedItemPosition() + 1;
-                int dueMonth = editExamMonth.getSelectedItemPosition() + 1;
+                int hour = Integer.parseInt(editExamHour.getSelectedItem().toString());
+                int minute = Integer.parseInt(editExamMinute.getSelectedItem().toString());
+                String amPm = editExamAm.getSelectedItem().toString();
+                int day = editExamDay.getSelectedItemPosition() + 1;
+                int month = editExamMonth.getSelectedItemPosition() + 1;
 
-                // Convert the AM/PM string to 24-hour format
-                if (dueAmPm.equals("PM")) {
-                    if (dueHour < 12) {
-                        dueHour += 12;
+                if (amPm.equals("PM")) {
+                    if (hour < 12) {
+                        hour += 12;
                     }
                 } else {
-                    if (dueHour == 12) {
-                        dueHour = 0;
+                    if (hour == 12) {
+                        hour = 0;
                     }
                 }
 
-                // Get the current year and create a LocalDateTime instance
                 LocalDateTime currentDateTime = LocalDateTime.now();
                 int currentYear = currentDateTime.getYear();
 
-                LocalDateTime dueDateTime = LocalDateTime.of(currentYear, dueMonth, dueDay, dueHour, dueMinute);
+                LocalDateTime dueDateTime = LocalDateTime.of(currentYear, month, day, hour, minute);
 
                 int index = mExamList.indexOf(exam);
                 if (index != -1) {
-                    // Remove the class from its current position in the list
                     removeItem(index);
 
-                    // Update assignment with new information
                     exam.setTime(dueDateTime);
                     exam.setLocation(editExamLocation.getText().toString());
                     exam.setName(editExamName.getText().toString());
@@ -197,12 +186,10 @@ public class ExamListAdapter extends RecyclerView.Adapter<ExamListAdapter.ExamVi
                     notifyDataSetChanged();
                 }
 
-                // Dismiss the dialog
                 dialog.dismiss();
             }
         });
 
-        // Set click listener for cancel button
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
