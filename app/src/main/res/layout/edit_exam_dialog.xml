@@ -6,13 +6,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <EditText
-        android:id="@+id/editAssignmentName"
+        android:id="@+id/editExamName"
         android:layout_width="231dp"
         android:layout_height="44dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:hint="Assignment Name"
-        app:layout_constraintBottom_toTopOf="@id/editAssignmentDueDateTimeTextView"
+        android:hint="Exam Name"
+        app:layout_constraintBottom_toTopOf="@id/editExamTimeTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/editAssignmentButtonCancel"
+        android:id="@+id/editExamButtonCancel"
         android:layout_width="56dp"
         android:layout_height="45dp"
         android:layout_marginTop="20dp"
@@ -29,24 +29,40 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@id/editAssignmentName"
+        app:layout_constraintStart_toEndOf="@id/editExamName"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/editAssignmentDueDateTimeTextView"
+        android:id="@+id/editExamTimeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:text="Due Date Time:"
+        android:text="Exam Time:"
         app:layout_constraintBottom_toTopOf="@id/editExamDay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editAssignmentName"
+        app:layout_constraintTop_toBottomOf="@id/editExamName"
         app:layout_constraintVertical_bias="0.377" />
+
+    <Spinner
+        android:id="@+id/editExamHour"
+        android:layout_width="90dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="20dp"
+        android:entries="@array/hours"
+        android:prompt="@string/hour_starting_prompt"
+        app:layout_constraintBottom_toTopOf="@+id/editExamLocation"
+        app:layout_constraintEnd_toStartOf="@+id/editExamMonth"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editExamDayTextView" />
 
     <Spinner
         android:id="@+id/editExamDay"
@@ -60,7 +76,7 @@
         app:layout_constraintEnd_toStartOf="@+id/editExamMinute"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editAssignmentDueDateTimeTextView"
+        app:layout_constraintTop_toBottomOf="@id/editExamTimeTextView"
         app:layout_constraintVertical_bias="1.0" />
 
     <Spinner
@@ -69,6 +85,7 @@
         android:layout_height="24dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
+        android:layout_marginBottom="20dp"
         android:entries="@array/minutes"
         app:layout_constraintBottom_toTopOf="@+id/editExamDayTextView"
         app:layout_constraintEnd_toStartOf="@id/editExamAm"
@@ -85,92 +102,77 @@
         app:layout_constraintBottom_toTopOf="@+id/editExamDayTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/editExamMinute"
-        app:layout_constraintTop_toBottomOf="@id/editAssignmentDueDateTimeTextView"
-        app:layout_constraintVertical_bias="0.413" />
+        app:layout_constraintTop_toBottomOf="@id/editExamTimeTextView"
+        app:layout_constraintVertical_bias="0.487" />
 
     <TextView
         android:id="@+id/editExamDayTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:text="Due Date Day:"
-        app:layout_constraintBottom_toTopOf="@id/editAssignmentDueDateDay"
+        android:layout_marginTop="20dp"
+        android:text="Exam Day:"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editExamDay" />
 
     <Spinner
-        android:id="@+id/editAssignmentDueDateDay"
-        android:layout_width="103dp"
-        android:layout_height="25dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:entries="@array/days"
-        app:layout_constraintBottom_toTopOf="@id/editAssignmentAssociatedClass"
-        app:layout_constraintEnd_toStartOf="@id/editExamMonth"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editExamDayTextView" />
-
-    <Spinner
         android:id="@+id/editExamMonth"
         android:layout_width="200dp"
         android:layout_height="25dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="11dp"
         android:entries="@array/months"
-        app:layout_constraintBottom_toTopOf="@+id/editAssignmentAssociatedClass"
+        app:layout_constraintBottom_toTopOf="@+id/editExamLocation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@id/editAssignmentDueDateDay"
-        app:layout_constraintTop_toBottomOf="@id/editExamDayTextView"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <EditText
-        android:id="@+id/editAssignmentAssociatedClass"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="20dp"
-        android:hint="Associated class"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/editAssignmentNote"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editAssignmentDueDateDay"
-        app:layout_constraintVertical_bias="0.479" />
-
-    <EditText
-        android:id="@+id/editAssignmentNote"
-        android:layout_width="230dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="30dp"
-        android:hint="Note"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editAssignmentAssociatedClass" />
+        app:layout_constraintStart_toEndOf="@+id/editExamDay"
+        app:layout_constraintTop_toBottomOf="@id/editExamDayTextView" />
 
     <Button
         android:id="@+id/editExamButtonSave"
         android:layout_width="48dp"
         android:layout_height="46dp"
-        android:layout_marginStart="120dp"
+        android:layout_marginStart="73dp"
         android:layout_marginTop="50dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="112dp"
         android:background="@drawable/save_button_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/editAssignmentAssociatedClass"
+        app:layout_constraintStart_toEndOf="@+id/editExamNote"
         app:layout_constraintTop_toBottomOf="@+id/editExamMonth"
         app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/editExamNote"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="20dp"
+        android:hint="Note"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/editExamButtonSave"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editExamLocation"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:hint="Location"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@+id/editExamNote"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editExamDay"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

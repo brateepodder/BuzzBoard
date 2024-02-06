@@ -1,6 +1,5 @@
 package com.example.calendarapp.ui.gallery;
 
-import android.bluetooth.BluetoothAssignedNumbers;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -20,9 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.calendarapp.R;
 import com.example.calendarapp.databinding.FragmentGalleryBinding;
 import com.example.calendarapp.ui.adapters.AssignmentsListAdapter;
-import com.example.calendarapp.ui.adapters.ClassListAdapter;
 import com.example.calendarapp.ui.models.AssignmentModel;
-import com.example.calendarapp.ui.models.ClassModel;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -72,14 +68,14 @@ public class GalleryFragment extends Fragment {
     private void showEditDialog(View dialogView) {
         // Find views within the edit_assignment_dialog layout
         EditText editAssignmentName = dialogView.findViewById(R.id.editAssignmentName);
-        Spinner editAssignmentDueHour = dialogView.findViewById(R.id.editAssignmentHour);
-        Spinner editAssignmentDueMinute = dialogView.findViewById(R.id.editAssignmentMinute);
-        Spinner editAssignmentDueAm = dialogView.findViewById(R.id.editAssignmentAm);
+        Spinner editAssignmentDueHour = dialogView.findViewById(R.id.editExamDay);
+        Spinner editAssignmentDueMinute = dialogView.findViewById(R.id.editExamMinute);
+        Spinner editAssignmentDueAm = dialogView.findViewById(R.id.editExamAm);
         Spinner editAssignmentDueDay = dialogView.findViewById(R.id.editAssignmentDueDateDay);
-        Spinner editAssignmentDueMonth = dialogView.findViewById(R.id.editAssignmentDueDateMonth);
+        Spinner editAssignmentDueMonth = dialogView.findViewById(R.id.editExamMonth);
         EditText editAssignmentAssociatedClass = dialogView.findViewById(R.id.editAssignmentAssociatedClass);
         EditText editAssignmentNote = dialogView.findViewById(R.id.editAssignmentNote);
-        Button buttonSave = dialogView.findViewById(R.id.editAssignmentButtonSave);
+        Button buttonSave = dialogView.findViewById(R.id.editExamButtonSave);
         Button buttonCancel = dialogView.findViewById(R.id.editAssignmentButtonCancel);
 
         //Popup the edit_assignment_dialog
