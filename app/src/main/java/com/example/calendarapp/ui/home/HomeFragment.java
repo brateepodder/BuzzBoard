@@ -1,6 +1,8 @@
 package com.example.calendarapp.ui.home;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,13 +29,17 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class HomeFragment extends Fragment {
     private RecyclerView recyclerViewClasses;
     private ClassListAdapter adapter;
     private List<ClassModel> classList;
     private FragmentHomeBinding binding;
+    private SharedPreferences sharedPreferences;
+
 
     public ClassListAdapter getClassListAdapter() {
         return this.adapter;
@@ -52,16 +58,12 @@ public class HomeFragment extends Fragment {
 
         classList = new ArrayList<>();
 
+        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
+        loadClassesFromSharedPreferences();
+
+
         adapter = new ClassListAdapter(getActivity(), classList);
         recyclerViewClasses.setAdapter(adapter);
-
-        classList.add(new ClassModel("MATH 101", LocalTime.parse("10:00 AM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("11:15 AM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY}, "Prof. Johnson"));
-        classList.add(new ClassModel("BIO 204", LocalTime.parse("1:30 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("2:45 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.TUESDAY, DayOfWeek.THURSDAY}, "Dr. Williams"));
-        classList.add(new ClassModel("HIST 301", LocalTime.parse("3:00 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("4:15 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY}, "Prof. Davis"));
-        classList.add(new ClassModel("CHEM 202", LocalTime.parse("9:00 AM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("10:15 AM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.TUESDAY, DayOfWeek.THURSDAY}, "Dr. Anderson"));
-        classList.add(new ClassModel("PSYC 101", LocalTime.parse("11:30 AM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("12:45 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.WEDNESDAY, DayOfWeek.FRIDAY}, "Prof. Smith"));
-        classList.add(new ClassModel("PHYS 211 LAB", LocalTime.parse("2:30 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("5:15 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.FRIDAY}, "TA Jennifer"));
-        classList.add(new ClassModel("ART 302 STUDIO", LocalTime.parse("3:30 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("6:00 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.THURSDAY}, "Prof. Thompson"));
 
         adapter.notifyDataSetChanged();
 
@@ -77,8 +79,22 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    private DayOfWeek convertPositionToDayOfWeek(int position) {
-        return DayOfWeek.of(position + 1);
+    private void loadClassesFromSharedPreferences() {
+        Set<String> classSet = sharedPreferences.getStringSet("classSet", new HashSet<>());
+        for (String classString : classSet) {
+            ClassModel classModel = ClassModel.fromStringClass(classString);
+            if (classModel != null) {
+                classList.add(classModel);
+            }
+        }
+    }
+
+    private void saveClassesToSharedPreferences() {
+        Set<String> classSet = new HashSet<>();
+        for (ClassModel classModel : classList) {
+            classSet.add(classModel.toString());
+        }
+        sharedPreferences.edit().putStringSet("classSet", classSet).apply();
     }
 
     private void showEmptyEditDialog(View dialogView) {
@@ -139,6 +155,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        saveClassesToSharedPreferences();
         binding = null;
     }
 }

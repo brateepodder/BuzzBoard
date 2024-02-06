@@ -1,5 +1,7 @@
 package com.example.calendarapp.ui.slideshow;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +25,9 @@ import com.example.calendarapp.ui.models.ExamModel;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SlideshowFragment extends Fragment {
 
@@ -31,6 +35,8 @@ public class SlideshowFragment extends Fragment {
     private RecyclerView recyclerViewExams;
     private List<ExamModel> examList;
     private ExamListAdapter adapter;
+    private SharedPreferences sharedPreferences;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,14 +50,18 @@ public class SlideshowFragment extends Fragment {
         recyclerViewExams.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         examList = new ArrayList<>();
+
+        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
+        loadExamsFromSharedPreferences();
+
         adapter = new ExamListAdapter(getActivity(), examList);
         recyclerViewExams.setAdapter(adapter);
 
-        examList.add(new ExamModel("Math Exam", LocalDateTime.of(2024, 3, 15, 9, 30), "Room 101", "Chapter 1-5"));
-        examList.add(new ExamModel("History Exam", LocalDateTime.of(2024, 4, 22, 13, 45), "Auditorium", "World Wars"));
-        examList.add(new ExamModel("Science Exam", LocalDateTime.of(2024, 5, 10, 10, 15), "Laboratory", "Chemistry and Biology"));
-        examList.add(new ExamModel("English Exam", LocalDateTime.of(2024, 6, 5, 11, 0), "Classroom 202", "Literature Analysis"));
-        adapter.notifyDataSetChanged();
+//        examList.add(new ExamModel("Math Exam", LocalDateTime.of(2024, 3, 15, 9, 30), "Room 101", "Chapter 1-5"));
+//        examList.add(new ExamModel("History Exam", LocalDateTime.of(2024, 4, 22, 13, 45), "Auditorium", "World Wars"));
+//        examList.add(new ExamModel("Science Exam", LocalDateTime.of(2024, 5, 10, 10, 15), "Laboratory", "Chemistry and Biology"));
+//        examList.add(new ExamModel("English Exam", LocalDateTime.of(2024, 6, 5, 11, 0), "Classroom 202", "Literature Analysis"));
+//        adapter.notifyDataSetChanged();
 
         Button addButton = root.findViewById(R.id.examsAddButton);
 
@@ -64,6 +74,24 @@ public class SlideshowFragment extends Fragment {
         });
 
         return root;
+    }
+
+    private void loadExamsFromSharedPreferences() {
+        Set<String> examSet = sharedPreferences.getStringSet("examSet", new HashSet<>());
+        for (String examString : examSet) {
+            ExamModel examModel = ExamModel.fromStringExam(examString);
+            if (examModel != null) {
+                examList.add(examModel);
+            }
+        }
+    }
+
+    private void saveExamsToSharedPreferences() {
+        Set<String> examSet = new HashSet<>();
+        for (ExamModel examModel : examList) {
+            examSet.add(examModel.toString());
+        }
+        sharedPreferences.edit().putStringSet("examSet", examSet).apply();
     }
 
     private void showEditDialog(View dialogView) {
@@ -130,6 +158,7 @@ public class SlideshowFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        saveExamsToSharedPreferences();
         binding = null;
     }
 }
