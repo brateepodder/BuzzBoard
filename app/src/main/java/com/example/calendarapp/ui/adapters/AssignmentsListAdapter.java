@@ -19,13 +19,10 @@ import com.example.calendarapp.ui.models.AssignmentModel;
 import com.example.calendarapp.R;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 public class AssignmentsListAdapter extends RecyclerView.Adapter<AssignmentsListAdapter.AssignmentsViewHolder> {
     private Context mContext; // Context reference
@@ -71,36 +68,31 @@ public class AssignmentsListAdapter extends RecyclerView.Adapter<AssignmentsList
 
     @Override
     public void onBindViewHolder(@NonNull AssignmentsListAdapter.AssignmentsViewHolder holder, int position) {
-        //Edit Button On Click Listener
         holder.assignmentsEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Show the edit dialog
                 showEditDialog(mAssignmentList.get(position), position);
             }
         });
 
-        //Delete button onClickListener
         holder.assignmentsDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Remove the corresponding class from the list
                 int currentPosition = holder.getAdapterPosition();
                 removeItem(currentPosition);
             }
         });
 
-        // Get the data model based on position
         Collections.sort(mAssignmentList);
         AssignmentModel assignment = mAssignmentList.get(position);
 
-        // Set information of view
         holder.assignmentNameTextView.setText(assignment.getName());
         holder.assignmentDueDateTextView.setText(assignment.getDueDateToString());
         holder.assignmentsAssociatedCourse.setText(assignment.getAssociatedClassAsString());
         holder.assignmentNote.setText(assignment.getNote());
 
         ArrayList<Integer> colorResources = new ArrayList<>(Arrays.asList(
+                R.color.yellow,
                 R.color.bubble_1,
                 R.color.bubble_2,
                 R.color.bubble_3,
@@ -110,8 +102,7 @@ public class AssignmentsListAdapter extends RecyclerView.Adapter<AssignmentsList
                 R.color.bubble_7,
                 R.color.bubble_8,
                 R.color.bubble_9,
-                R.color.bubble_10,
-                R.color.yellow
+                R.color.bubble_10
         ));
 
         // Calculate the color index based on the position
@@ -133,14 +124,14 @@ public class AssignmentsListAdapter extends RecyclerView.Adapter<AssignmentsList
 
         // Find views within the dialog layout
         EditText editAssignmentName = dialogView.findViewById(R.id.editAssignmentName);
-        Spinner editAssignmentDueHour = dialogView.findViewById(R.id.editAssignmentHour);
-        Spinner editAssignmentDueMinute = dialogView.findViewById(R.id.editAssignmentMinute);
-        Spinner editAssignmentDueAm = dialogView.findViewById(R.id.editAssignmentAm);
+        Spinner editAssignmentDueHour = dialogView.findViewById(R.id.editExamDay);
+        Spinner editAssignmentDueMinute = dialogView.findViewById(R.id.editExamMinute);
+        Spinner editAssignmentDueAm = dialogView.findViewById(R.id.editExamAm);
         Spinner editAssignmentDueDay = dialogView.findViewById(R.id.editAssignmentDueDateDay);
-        Spinner editAssignmentDueMonth = dialogView.findViewById(R.id.editAssignmentDueDateMonth);
+        Spinner editAssignmentDueMonth = dialogView.findViewById(R.id.editExamMonth);
         EditText editAssignmentAssociatedClass = dialogView.findViewById(R.id.editAssignmentAssociatedClass);
         EditText editAssignmentNote = dialogView.findViewById(R.id.editAssignmentNote);
-        Button buttonSave = dialogView.findViewById(R.id.editAssignmentButtonSave);
+        Button buttonSave = dialogView.findViewById(R.id.editExamButtonSave);
         Button buttonCancel = dialogView.findViewById(R.id.editAssignmentButtonCancel);
 
         //Set assignment editText name, note & associated class
