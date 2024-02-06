@@ -30,7 +30,7 @@
 
     <!-- Button that hovers over the RecyclerView -->
     <Button
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/classAddButton"
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:layout_alignParentEnd="true"

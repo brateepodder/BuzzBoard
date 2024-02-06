@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<!-- item_class.xml -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -7,7 +7,7 @@
     android:visibility="visible">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ClassLayout"
+        android:id="@+id/AssignmentLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -26,89 +26,91 @@
         android:paddingBottom="10dp">
 
         <TextView
-            android:id="@+id/courseNameTextView"
+            android:id="@+id/assignmentNameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="10dp"
             android:layout_marginEnd="150dp"
-            android:layout_marginBottom="10dp"
             android:padding="0dp"
-            android:text="CLASS101"
+            android:text="ASSIGNMENT 101"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/timeTextView"
+            app:layout_constraintBottom_toTopOf="@id/assignmentDueDateTextView"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/daysTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
-            android:text="Monday, Wednesday, Friday"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/assignmentsAssociatedCourse"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timeTextView" />
 
         <TextView
             android:id="@+id/assignmentsAssociatedCourse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="12dp"
             android:text="Dr.Smith"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/ClassLayout"
+            app:layout_constraintBottom_toTopOf="@id/assignmentsNotes"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/daysTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/assignmentDueDateTextView" />
 
         <TextView
-            android:id="@+id/timeTextView"
+            android:id="@+id/assignmentsNotes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
-            android:text="10:30AM - 12:30PM"
+            android:layout_marginEnd="12dp"
+            android:text="Notes"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/daysTextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/assignmentsAssociatedCourse" />
+
+        <TextView
+            android:id="@+id/assignmentDueDateTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:text="06/02/2024 11:59PM"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/assignmentsAssociatedCourse"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/courseNameTextView" />
+            app:layout_constraintTop_toBottomOf="@id/assignmentNameTextView" />
 
         <Button
-            android:id="@+id/class_edit_button"
+            android:id="@+id/assignmentsEditButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="35dp"
+            android:layout_marginTop="5dp"
             android:background="@drawable/edit_button"
             app:backgroundTint="@null"
-            app:layout_constraintBottom_toTopOf="@+id/timeTextView"
-            app:layout_constraintEnd_toStartOf="@+id/class_delete_button"
-            app:layout_constraintStart_toEndOf="@+id/courseNameTextView"
-            app:layout_constraintTop_toTopOf="@+id/ClassLayout" />
+            app:layout_constraintBottom_toTopOf="@+id/assignmentDueDateTextView"
+            app:layout_constraintEnd_toStartOf="@id/assignmentsDeleteButton"
+            app:layout_constraintStart_toEndOf="@+id/assignmentNameTextView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
-            android:id="@+id/class_delete_button"
+            android:id="@+id/assignmentsDeleteButton"
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:background="@drawable/ic_cross"
             app:backgroundTint="@null"
-            app:layout_constraintBottom_toTopOf="@+id/timeTextView"
-            app:layout_constraintEnd_toEndOf="@+id/ClassLayout"
-            app:layout_constraintStart_toEndOf="@id/class_edit_button"
-            app:layout_constraintTop_toTopOf="@+id/ClassLayout"
-            app:layout_constraintVertical_bias="0.428" />
+            app:layout_constraintBottom_toTopOf="@id/assignmentDueDateTextView"
+            app:layout_constraintEnd_toEndOf="@id/AssignmentLayout"
+            app:layout_constraintStart_toEndOf="@id/assignmentsEditButton"
+            app:layout_constraintTop_toTopOf="@id/AssignmentLayout"
+            app:layout_constraintVertical_bias="0.361" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
