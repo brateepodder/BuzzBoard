@@ -4,6 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.time.format.TextStyle;
@@ -132,4 +133,37 @@ public class ClassModel implements Comparable<ClassModel> {
         return this.startTime.compareTo(other.startTime);
     }
 
+    @Override
+    public String toString() {
+        return String.format(Locale.getDefault(), "%s|%s|%s|%s|%s",
+                courseName,
+                startTime.toString(),
+                endTime.toString(),
+                Arrays.toString(days),
+                instructors);
+    }
+
+    public static ClassModel fromStringClass(String data) {
+        String[] parts = data.split("\\|");
+        if (parts.length != 5) {
+            return null;
+        }
+
+        String courseName = parts[0];
+        LocalTime startTime = LocalTime.parse(parts[1]);
+        LocalTime endTime = LocalTime.parse(parts[2]);
+        DayOfWeek[] days = parseDays(parts[3]);
+        String instructors = parts[4];
+
+        return new ClassModel(courseName, startTime, endTime, days, instructors);
+    }
+
+    private static DayOfWeek[] parseDays(String daysString) {
+        String[] dayStrings = daysString.substring(1, daysString.length() - 1).split(", ");
+        DayOfWeek[] days = new DayOfWeek[dayStrings.length];
+        for (int i = 0; i < dayStrings.length; i++) {
+            days[i] = DayOfWeek.valueOf(dayStrings[i]);
+        }
+        return days;
+    }
 }

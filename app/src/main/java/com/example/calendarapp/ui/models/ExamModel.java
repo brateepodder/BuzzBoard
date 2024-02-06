@@ -86,4 +86,22 @@ public class ExamModel implements Comparable<ExamModel> {
         return this.time.compareTo(other.time);
     }
 
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        return String.format("%s|%s|%s|%s", name, time.format(formatter), location, note);
+    }
+
+    public static ExamModel fromStringExam(String str) {
+        String[] parts = str.split("\\|");
+        if (parts.length != 4) {
+            throw new IllegalArgumentException("Invalid string format for ExamModel: " + str);
+        }
+        String name = parts[0];
+        LocalDateTime time = LocalDateTime.parse(parts[1], DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        String location = parts[2];
+        String note = parts[3];
+        return new ExamModel(name, time, location, note);
+    }
+
 }

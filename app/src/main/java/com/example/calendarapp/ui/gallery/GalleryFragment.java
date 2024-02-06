@@ -1,5 +1,7 @@
 package com.example.calendarapp.ui.gallery;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +24,9 @@ import com.example.calendarapp.ui.models.AssignmentModel;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class GalleryFragment extends Fragment {
 
@@ -30,6 +34,7 @@ public class GalleryFragment extends Fragment {
     private RecyclerView recyclerViewAssignments;
     private List<AssignmentModel> assignmentList;
     private AssignmentsListAdapter adapter;
+    private SharedPreferences sharedPreferences;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,13 +49,16 @@ public class GalleryFragment extends Fragment {
 
         assignmentList = new ArrayList<>();
 
+        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
+        loadAssignmentsFromSharedPreferences();
+
         adapter = new AssignmentsListAdapter(getActivity(), assignmentList);
         recyclerViewAssignments.setAdapter(adapter);
 
-        assignmentList.add(new AssignmentModel("Math Homework", LocalDateTime.of(2024, 2, 10, 12, 0), "Math Class", "Complete exercises 1-5"));
-        assignmentList.add(new AssignmentModel("History Essay", LocalDateTime.of(2024, 2, 15, 15, 30), "History Class", "Research and write essay on World War II"));
-        assignmentList.add(new AssignmentModel("Science Project", LocalDateTime.of(2024, 2, 20, 10, 0), "Science Class", "Prepare presentation slides and materials"));
-        adapter.notifyDataSetChanged();
+//        assignmentList.add(new AssignmentModel("Math Homework", LocalDateTime.of(2024, 2, 10, 12, 0), "Math Class", "Complete exercises 1-5"));
+//        assignmentList.add(new AssignmentModel("History Essay", LocalDateTime.of(2024, 2, 15, 15, 30), "History Class", "Research and write essay on World War II"));
+//        assignmentList.add(new AssignmentModel("Science Project", LocalDateTime.of(2024, 2, 20, 10, 0), "Science Class", "Prepare presentation slides and materials"));
+//        adapter.notifyDataSetChanged();
 
         Button addButton = root.findViewById(R.id.assignmentAddButton);
 
@@ -63,6 +71,24 @@ public class GalleryFragment extends Fragment {
         });
 
         return root;
+    }
+
+    private void loadAssignmentsFromSharedPreferences() {
+        Set<String> assignmentSet = sharedPreferences.getStringSet("assignmentSet", new HashSet<>());
+        for (String assignmentString : assignmentSet) {
+            AssignmentModel assignmentModel = AssignmentModel.fromStringAssignment(assignmentString);
+            if (assignmentModel != null) {
+                assignmentList.add(assignmentModel);
+            }
+        }
+    }
+
+    private void saveAssignmentsToSharedPreferences() {
+        Set<String> assignmentSet = new HashSet<>();
+        for (AssignmentModel assignmentModel : assignmentList) {
+            assignmentSet.add(assignmentModel.toString());
+        }
+        sharedPreferences.edit().putStringSet("assignmentSet", assignmentSet).apply();
     }
 
     private void showEditDialog(View dialogView) {
@@ -127,6 +153,7 @@ public class GalleryFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        saveAssignmentsToSharedPreferences();
         binding = null;
     }
 }

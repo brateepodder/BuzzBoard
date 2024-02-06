@@ -2,6 +2,8 @@ package com.example.calendarapp.ui.models;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
 
 public class AssignmentModel implements Comparable<AssignmentModel> {
     private String name;
@@ -92,6 +94,23 @@ public class AssignmentModel implements Comparable<AssignmentModel> {
 
     public int compareTo(AssignmentModel other) {
         return this.dueDate.compareTo(other.dueDate);
+    }
+    @Override
+    public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        return String.format("%s|%s|%s|%s", name, dueDate.format(formatter), associatedClass, note);
+    }
+
+    public static AssignmentModel fromStringAssignment(String str) {
+        String[] parts = str.split("\\|");
+        if (parts.length != 4) {
+            throw new IllegalArgumentException("fromStringAssignment: Invalid string format for AssignmentModel: " + str);
+        }
+        String name = parts[0];
+        LocalDateTime dueDate = LocalDateTime.parse(parts[1]);
+        String associatedClass = parts[2];
+        String note = parts[3];
+        return new AssignmentModel(name, dueDate, associatedClass, note);
     }
 
 }
