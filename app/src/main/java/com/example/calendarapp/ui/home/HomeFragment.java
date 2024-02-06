@@ -1,10 +1,7 @@
 package com.example.calendarapp.ui.home;
 
 import android.app.AlertDialog;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +10,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.TextView;
-
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -48,18 +43,14 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // Initialize recycler view
         recyclerViewClasses = root.findViewById(R.id.recyclerViewClasses);
         recyclerViewClasses.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        // Initialize class list
         classList = new ArrayList<>();
 
-        // Initialize adapter
         adapter = new ClassListAdapter(getActivity(), classList);
         recyclerViewClasses.setAdapter(adapter);
 
-        // Add sample data (you can replace this with your actual data)
         classList.add(new ClassModel("CS2340", LocalTime.parse("8:00 AM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("9:15 AM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY}, "Prof. Pedro"));
         classList.add(new ClassModel("CS3001", LocalTime.parse("2:00 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("2:50 PM", DateTimeFormatter.ofPattern("h:mm a")),new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY}, "Prof. Ziegler"));
         classList.add(new ClassModel("APPH1040", LocalTime.parse("12:30 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("1:20 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY}, "Dr. Alexandra"));
@@ -67,7 +58,6 @@ public class HomeFragment extends Fragment {
         classList.add(new ClassModel("CS2110", LocalTime.parse("2:00 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("3:15 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.TUESDAY, DayOfWeek.THURSDAY}, "Dr. MaryGold"));
         classList.add(new ClassModel("CS3001 - Section B14", LocalTime.parse("5:00 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("6:15 PM", DateTimeFormatter.ofPattern("h:mm a")),new DayOfWeek[]{DayOfWeek.THURSDAY}, "TA Pranav"));
         classList.add(new ClassModel("CS2110 Lab", LocalTime.parse("6:30 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("7:45 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY}, "TA Alex and TA Kyle"));
-        // Notify adapter about data change
         adapter.notifyDataSetChanged();
 
         Button addButton = root.findViewById(R.id.floatingActionButton);
@@ -75,8 +65,6 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.edit_class_dialog, null);
-
-                // Call the method to show the edit dialog without prepopulating data
                 showEmptyEditDialog(dialogView);
             }
         });
@@ -84,16 +72,12 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
-    // Method to convert position in the list to DayOfWeek enum
     private DayOfWeek convertPositionToDayOfWeek(int position) {
-        // Since DayOfWeek starts from MONDAY (1) to SUNDAY (7), add 1 to the position
         return DayOfWeek.of(position + 1);
     }
 
     // Method to show the edit dialog without prepopulating data
     private void showEmptyEditDialog(View dialogView) {
-        Log.d("Method running:", "showEmptyEditDialog.");
-
         // Find views within the dialog layout
         EditText editTextCourseName = dialogView.findViewById(R.id.editClassCourseName);
         Spinner spinnerStartHour = dialogView.findViewById(R.id.editClassStartHour);
@@ -107,47 +91,32 @@ public class HomeFragment extends Fragment {
         Button buttonCancel = dialogView.findViewById(R.id.editClassButtonCancel);
         ScrollView scrollView = dialogView.findViewById(R.id.editClassDayDropdown);
 
-        // Inflate the days_of_week_list.xml layout
         View daysOfWeekListViewLayout = LayoutInflater.from(getContext()).inflate(R.layout.days_of_week_list, null);
         ListView daysOfWeekListView = daysOfWeekListViewLayout.findViewById(R.id.daysOfWeekListView);
-
-        // Set adapter for the ListView
         DaysOfWeekAdapter dayAdapter = new DaysOfWeekAdapter(getContext(), R.layout.day_of_week_item, getResources().getStringArray(R.array.days_of_week));
         daysOfWeekListView.setAdapter(dayAdapter);
-
-        // Add the daysOfWeekListViewLayout to the scrollView
         scrollView.addView(daysOfWeekListViewLayout);
 
-        // Show the dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(dialogView.getContext());
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
         dialog.show();
 
-        List<DayOfWeek> selectedDaysList = new ArrayList<>();
-
-        // Set click listener for save button
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get selected values from spinners for start time
                 int startHour = Integer.parseInt(spinnerStartHour.getSelectedItem().toString());
                 int startMinute = Integer.parseInt(spinnerStartMinute.getSelectedItem().toString());
                 String startAmPm = spinnerStartAm.getSelectedItem().toString();
 
-                // Get selected values from spinners for end time
                 int endHour = Integer.parseInt(spinnerEndHour.getSelectedItem().toString());
                 int endMinute = Integer.parseInt(spinnerEndMinute.getSelectedItem().toString());
                 String endAmPm = spinnerEndAm.getSelectedItem().toString();
 
-                // Convert start time to LocalTime object
                 LocalTime startTime = LocalTime.of(startHour % 12 + (startAmPm.equals("PM") ? 12 : 0), startMinute);
                 String courseName = editTextCourseName.getText().toString();
-
-                // Convert end time to LocalTime object
                 LocalTime endTime = LocalTime.of(endHour % 12 + (endAmPm.equals("PM") ? 12 : 0), endMinute);
                 DayOfWeek[] days = dayAdapter.getSelectedDaysArray();
-
 
                 ClassModel classModel = new ClassModel(editTextCourseName.getText().toString(), startTime, endTime, days, editTextInstructors.getText().toString());
 
@@ -156,8 +125,6 @@ public class HomeFragment extends Fragment {
                 dialog.dismiss();
             }
         });
-
-        // Set click listener for cancel button
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

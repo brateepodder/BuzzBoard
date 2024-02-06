@@ -48,7 +48,6 @@ public class DaysOfWeekAdapter extends ArrayAdapter<String> {
         String dayOfWeek = getItem(position);
         dayTextView.setText(dayOfWeek);
 
-        // Set background color based on selection
         if (mSelections.get(position)) {
             convertView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.gatech_blue));
             dayTextView.setTextColor(ContextCompat.getColor(mContext, R.color.white));
@@ -56,8 +55,6 @@ public class DaysOfWeekAdapter extends ArrayAdapter<String> {
             convertView.setBackgroundColor(Color.TRANSPARENT);
             dayTextView.setTextColor(ContextCompat.getColor(mContext, R.color.black));
         }
-
-        // Handle item click to toggle selection
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,7 +105,6 @@ public class DaysOfWeekAdapter extends ArrayAdapter<String> {
         // Clear previous selections
         mSelectedDays.clear();
 
-        // Iterate through selectedDays and find corresponding positions
         for (DayOfWeek day : selectedDays) {
             int position = getPositionForDay(day);
             if (position != -1) {

@@ -14,8 +14,6 @@ public class ClassModel implements Comparable<ClassModel>{
     private LocalTime endTime;
     private DayOfWeek[] days;
     private String instructors;
-
-    // Constructor
     public ClassModel(String courseName, LocalTime startTime, LocalTime endTime, DayOfWeek[] days, String instructors) {
         this.courseName = courseName;
         this.days = days;
@@ -23,8 +21,6 @@ public class ClassModel implements Comparable<ClassModel>{
         this.endTime = endTime;
         this.instructors = instructors;
     }
-
-    // Getters and setters
     public String getCourseName() {
         return courseName;
     }
@@ -90,7 +86,6 @@ public class ClassModel implements Comparable<ClassModel>{
     public List<Integer> getDaysAsIntegers() {
         List<Integer> dayIntegers = new ArrayList<>();
         for (DayOfWeek day : days) {
-            // Map DayOfWeek enum values to integers (e.g., Sunday = 0, Monday = 1, etc.)
             switch (day) {
                 case SUNDAY:
                     dayIntegers.add(0);
@@ -114,7 +109,6 @@ public class ClassModel implements Comparable<ClassModel>{
                     dayIntegers.add(6);
                     break;
                 default:
-                    // Handle unexpected cases
                     break;
             }
         }
