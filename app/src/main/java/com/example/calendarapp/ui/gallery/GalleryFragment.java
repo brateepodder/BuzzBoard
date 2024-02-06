@@ -50,6 +50,7 @@ public class GalleryFragment extends Fragment {
         assignmentList.add(new AssignmentModel("Math Homework", LocalDateTime.of(2024, 2, 10, 12, 0), "Math Class", "Complete exercises 1-5"));
         assignmentList.add(new AssignmentModel("History Essay", LocalDateTime.of(2024, 2, 15, 15, 30), "History Class", "Research and write essay on World War II"));
         assignmentList.add(new AssignmentModel("Science Project", LocalDateTime.of(2024, 2, 20, 10, 0), "Science Class", "Prepare presentation slides and materials"));
+        assignmentList.add(new AssignmentModel("English Reading", LocalDateTime.of(2024, 2, 12, 14, 15), "English Class", "Read chapters 5-7 and write a summary"));
         adapter.notifyDataSetChanged();
 
         Button addButton = root.findViewById(R.id.assignmentAddButton);
