@@ -18,10 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calendarapp.ui.models.ClassModel;
 import com.example.calendarapp.R;
-<<<<<<< HEAD
-=======
-
->>>>>>> 4b746f25d2701e4f15c8dc690fd429fdf384e2bd
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -35,17 +31,11 @@ import androidx.appcompat.app.AlertDialog;
 public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.ClassViewHolder> {
 
     private Context mContext;
-<<<<<<< HEAD
     private List<ClassModel> mClassList;
-=======
-    private List<ClassModel> mClassList; // List of class models
->>>>>>> 4b746f25d2701e4f15c8dc690fd429fdf384e2bd
 
     public ClassListAdapter(Context context, List<ClassModel> classList) {
         mContext = context;
         mClassList = classList;
-<<<<<<< HEAD
-=======
     }
 
     public List<ClassModel> getClassList() {
@@ -54,7 +44,6 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
 
     public void setClassList(List<ClassModel> classList) {
         mClassList = classList;
->>>>>>> 4b746f25d2701e4f15c8dc690fd429fdf384e2bd
     }
     public static class ClassViewHolder extends RecyclerView.ViewHolder {
         public TextView courseNameTextView;
@@ -93,11 +82,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.Clas
                 showEditDialog(mClassList.get(position), position);
             }
         });
-<<<<<<< HEAD
-=======
 
-        // Delete button onClickListener
->>>>>>> 4b746f25d2701e4f15c8dc690fd429fdf384e2bd
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

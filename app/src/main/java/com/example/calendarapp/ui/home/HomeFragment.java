@@ -2,10 +2,6 @@ package com.example.calendarapp.ui.home;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-<<<<<<< HEAD
-=======
-import android.util.Log;
->>>>>>> 4b746f25d2701e4f15c8dc690fd429fdf384e2bd
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +10,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-<<<<<<< HEAD
-=======
-
->>>>>>> 4b746f25d2701e4f15c8dc690fd429fdf384e2bd
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -55,10 +47,6 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-<<<<<<< HEAD
-=======
-        //Initializing Recycler View for Classes
->>>>>>> 4b746f25d2701e4f15c8dc690fd429fdf384e2bd
         recyclerViewClasses = root.findViewById(R.id.recyclerViewClasses);
         recyclerViewClasses.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -74,10 +62,7 @@ public class HomeFragment extends Fragment {
         classList.add(new ClassModel("CS2110", LocalTime.parse("2:00 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("3:15 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.TUESDAY, DayOfWeek.THURSDAY}, "Dr. MaryGold"));
         classList.add(new ClassModel("CS3001 - Section B14", LocalTime.parse("5:00 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("6:15 PM", DateTimeFormatter.ofPattern("h:mm a")),new DayOfWeek[]{DayOfWeek.THURSDAY}, "TA Pranav"));
         classList.add(new ClassModel("CS2110 Lab", LocalTime.parse("6:30 PM", DateTimeFormatter.ofPattern("h:mm a")), LocalTime.parse("7:45 PM", DateTimeFormatter.ofPattern("h:mm a")), new DayOfWeek[]{DayOfWeek.MONDAY, DayOfWeek.WEDNESDAY}, "TA Alex and TA Kyle"));
-<<<<<<< HEAD
-=======
 
->>>>>>> 4b746f25d2701e4f15c8dc690fd429fdf384e2bd
         adapter.notifyDataSetChanged();
 
         Button addButton = root.findViewById(R.id.classAddButton);
@@ -96,13 +81,7 @@ public class HomeFragment extends Fragment {
         return DayOfWeek.of(position + 1);
     }
 
-    // Method to show the edit dialog without prepopulating data
     private void showEmptyEditDialog(View dialogView) {
-<<<<<<< HEAD
-        // Find views within the dialog layout
-=======
-        //Views in edit_class_dialog
->>>>>>> 4b746f25d2701e4f15c8dc690fd429fdf384e2bd
         EditText editTextCourseName = dialogView.findViewById(R.id.editClassCourseName);
         Spinner spinnerStartHour = dialogView.findViewById(R.id.editClassStartHour);
         Spinner spinnerStartMinute = dialogView.findViewById(R.id.editClassStartMinute);
@@ -115,10 +94,6 @@ public class HomeFragment extends Fragment {
         Button buttonCancel = dialogView.findViewById(R.id.editClassButtonCancel);
         ScrollView scrollView = dialogView.findViewById(R.id.editClassDayDropdown);
 
-<<<<<<< HEAD
-=======
-        //Related to custom day_of_week dropdown
->>>>>>> 4b746f25d2701e4f15c8dc690fd429fdf384e2bd
         View daysOfWeekListViewLayout = LayoutInflater.from(getContext()).inflate(R.layout.days_of_week_list, null);
         ListView daysOfWeekListView = daysOfWeekListViewLayout.findViewById(R.id.daysOfWeekListView);
         DaysOfWeekAdapter dayAdapter = new DaysOfWeekAdapter(getContext(), R.layout.day_of_week_item, getResources().getStringArray(R.array.days_of_week));
@@ -129,10 +104,6 @@ public class HomeFragment extends Fragment {
         builder.setView(dialogView);
         AlertDialog dialog = builder.create();
         dialog.show();
-<<<<<<< HEAD
-
-=======
->>>>>>> 4b746f25d2701e4f15c8dc690fd429fdf384e2bd
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
