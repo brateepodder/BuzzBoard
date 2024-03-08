@@ -1,4 +1,4 @@
-package com.example.calendarapp.ui.gallery;
+package com.example.calendarapp.ui.assignments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -18,8 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calendarapp.R;
-import com.example.calendarapp.databinding.FragmentGalleryBinding;
+import com.example.calendarapp.databinding.FragmentAssignmentsBinding;
 import com.example.calendarapp.ui.adapters.AssignmentsListAdapter;
+import com.example.calendarapp.ui.classes.ClassViewModel;
 import com.example.calendarapp.ui.models.AssignmentModel;
 
 import java.time.LocalDateTime;
@@ -28,20 +30,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class GalleryFragment extends Fragment {
+public class AssignmentFragment extends Fragment {
 
-    private FragmentGalleryBinding binding;
+    private FragmentAssignmentsBinding binding;
     private RecyclerView recyclerViewAssignments;
     private List<AssignmentModel> assignmentList;
     private AssignmentsListAdapter adapter;
     private SharedPreferences sharedPreferences;
+    private ClassViewModel classViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GalleryViewModel galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+        AssignmentViewModel assignmentViewModel =
+                new ViewModelProvider(this).get(AssignmentViewModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentAssignmentsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         recyclerViewAssignments = root.findViewById(R.id.recyclerViewAssignments);
@@ -55,11 +58,7 @@ public class GalleryFragment extends Fragment {
         adapter = new AssignmentsListAdapter(getActivity(), assignmentList);
         recyclerViewAssignments.setAdapter(adapter);
 
-//        assignmentList.add(new AssignmentModel("Math Homework", LocalDateTime.of(2024, 2, 10, 12, 0), "Math Class", "Complete exercises 1-5"));
-//        assignmentList.add(new AssignmentModel("History Essay", LocalDateTime.of(2024, 2, 15, 15, 30), "History Class", "Research and write essay on World War II"));
-//        assignmentList.add(new AssignmentModel("Science Project", LocalDateTime.of(2024, 2, 20, 10, 0), "Science Class", "Prepare presentation slides and materials"));
-//        adapter.notifyDataSetChanged();
-
+//
         Button addButton = root.findViewById(R.id.assignmentAddButton);
 
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -155,5 +154,18 @@ public class GalleryFragment extends Fragment {
         super.onDestroyView();
         saveAssignmentsToSharedPreferences();
         binding = null;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Obtain ViewModel
+        classViewModel = new ViewModelProvider(requireActivity()).get(ClassViewModel.class);
+
+        // Observe classList changes
+        classViewModel.getClassList().observe(getViewLifecycleOwner(), classList -> {
+            // Update UI or perform actions based on classList changes
+        });
     }
 }

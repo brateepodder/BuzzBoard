@@ -3,23 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_classes">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="com.example.calendarapp.ui.home.HomeFragment"
-        android:label="@string/menu_classes"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/nav_classes"
+        android:name="com.example.calendarapp.ui.classes.ClassFragment"
+        android:label="@string/menu_classes" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.calendarapp.ui.gallery.GalleryFragment"
-        android:label="@string/menu_assignments"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_assignments"
+        android:name="com.example.calendarapp.ui.assignments.AssignmentFragment"
+        android:label="@string/menu_assignments" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.calendarapp.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_exams"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_exams"
+        android:name="com.example.calendarapp.ui.exams.ExamFragment"
+        android:label="@string/menu_exams" />
 </navigation>

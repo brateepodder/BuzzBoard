@@ -135,25 +135,43 @@ public class ClassModel implements Comparable<ClassModel> {
 
     @Override
     public String toString() {
+        String startTimeString = startTime != null ? startTime.toString() : " ";
+        String endTimeString = endTime != null ? endTime.toString() : " ";
+        String daysString = days != null ? Arrays.toString(days) : " ";
+        String instructorsString = instructors != null ? instructors : " ";
+
         return String.format(Locale.getDefault(), "%s|%s|%s|%s|%s",
-                courseName,
-                startTime.toString(),
-                endTime.toString(),
-                Arrays.toString(days),
-                instructors);
+                courseName != null ? courseName : " ",
+                startTimeString,
+                endTimeString,
+                daysString,
+                instructorsString);
     }
 
     public static ClassModel fromStringClass(String data) {
         String[] parts = data.split("\\|");
-        if (parts.length != 5) {
-            return null;
-        }
 
-        String courseName = parts[0];
-        LocalTime startTime = LocalTime.parse(parts[1]);
-        LocalTime endTime = LocalTime.parse(parts[2]);
-        DayOfWeek[] days = parseDays(parts[3]);
-        String instructors = parts[4];
+        String courseName = " ";
+        LocalTime startTime = null;
+        LocalTime endTime = null;
+        DayOfWeek[] days = null;
+        String instructors = " ";
+
+        if (parts.length >= 1) {
+            courseName = parts[0];
+        }
+        if (parts.length >= 2) {
+            startTime = LocalTime.parse(parts[1]);
+        }
+        if (parts.length >= 3) {
+            endTime = LocalTime.parse(parts[2]);
+        }
+        if (parts.length >= 4) {
+            days = parseDays(parts[3]);
+        }
+        if (parts.length >= 5) {
+            instructors = parts[4];
+        }
 
         return new ClassModel(courseName, startTime, endTime, days, instructors);
     }
