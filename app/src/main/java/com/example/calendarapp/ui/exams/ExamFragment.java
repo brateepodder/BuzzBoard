@@ -1,4 +1,4 @@
-package com.example.calendarapp.ui.slideshow;
+package com.example.calendarapp.ui.exams;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,8 +19,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.calendarapp.R;
-import com.example.calendarapp.databinding.FragmentSlideshowBinding;
+import com.example.calendarapp.databinding.FragmentExamsBinding;
 import com.example.calendarapp.ui.adapters.ExamListAdapter;
+import com.example.calendarapp.ui.classes.ClassViewModel;
 import com.example.calendarapp.ui.models.ExamModel;
 
 import java.time.LocalDateTime;
@@ -29,21 +30,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class SlideshowFragment extends Fragment {
+public class ExamFragment extends Fragment {
 
-    private FragmentSlideshowBinding binding;
+    private FragmentExamsBinding binding;
     private RecyclerView recyclerViewExams;
     private List<ExamModel> examList;
     private ExamListAdapter adapter;
     private SharedPreferences sharedPreferences;
+    private ClassViewModel classViewModel;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        SlideshowViewModel slideshowViewModel =
-                new ViewModelProvider(this).get(SlideshowViewModel.class);
+        ExamViewModel examViewModel =
+                new ViewModelProvider(this).get(ExamViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentExamsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         recyclerViewExams = root.findViewById(R.id.recyclerViewExams);
@@ -160,5 +162,18 @@ public class SlideshowFragment extends Fragment {
         super.onDestroyView();
         saveExamsToSharedPreferences();
         binding = null;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Obtain ViewModel
+        classViewModel = new ViewModelProvider(requireActivity()).get(ClassViewModel.class);
+
+        // Observe classList changes
+        classViewModel.getClassList().observe(getViewLifecycleOwner(), classList -> {
+            // Update UI or perform actions based on classList changes
+        });
     }
 }

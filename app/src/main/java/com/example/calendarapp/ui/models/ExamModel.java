@@ -1,6 +1,7 @@
 package com.example.calendarapp.ui.models;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class ExamModel implements Comparable<ExamModel> {
@@ -89,7 +90,11 @@ public class ExamModel implements Comparable<ExamModel> {
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-        return String.format("%s|%s|%s|%s", name, time.format(formatter), location, note);
+        return String.format("%s|%s|%s|%s",
+                name != null ? name : " ",
+                time != null ? time.format(formatter) : " ",
+                location != null ? location : " ",
+                note != null ? note : " ");
     }
 
     public static ExamModel fromStringExam(String str) {
@@ -97,10 +102,23 @@ public class ExamModel implements Comparable<ExamModel> {
         if (parts.length != 4) {
             throw new IllegalArgumentException("Invalid string format for ExamModel: " + str);
         }
-        String name = parts[0];
-        LocalDateTime time = LocalDateTime.parse(parts[1], DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
-        String location = parts[2];
-        String note = parts[3];
+        String name = " ";
+        LocalDateTime time = null;
+        String location = " ";
+        String note = " ";
+
+        if (parts.length >= 1) {
+            name = parts[0];
+        }
+        if (parts.length >= 2) {
+            time = LocalDateTime.parse(parts[1], DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+        }
+        if (parts.length >= 3) {
+            location = parts[2];
+        }
+        if (parts.length >= 4) {
+            note = parts[3];
+        }
         return new ExamModel(name, time, location, note);
     }
 

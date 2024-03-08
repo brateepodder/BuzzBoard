@@ -98,19 +98,41 @@ public class AssignmentModel implements Comparable<AssignmentModel> {
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
-        return String.format("%s|%s|%s|%s", name, dueDate.format(formatter), associatedClass, note);
+        String dueDateString = dueDate != null ? dueDate.format(formatter) : " ";
+        String associatedClassString = associatedClass != null ? associatedClass : " ";
+        String noteString = note != null ? note : " ";
+
+        return String.format("%s|%s|%s|%s", name != null ? name : " ", dueDateString, associatedClassString, noteString);
     }
 
     public static AssignmentModel fromStringAssignment(String str) {
         String[] parts = str.split("\\|");
-        if (parts.length != 4) {
-            throw new IllegalArgumentException("fromStringAssignment: Invalid string format for AssignmentModel: " + str);
+
+        String name = " ";
+        LocalDateTime dueDate = null;
+        String associatedClass = " ";
+        String note = " ";
+        if (parts.length >= 1) {
+            name = parts[0];
         }
-        String name = parts[0];
-        LocalDateTime dueDate = LocalDateTime.parse(parts[1]);
-        String associatedClass = parts[2];
-        String note = parts[3];
+        if (parts.length >= 2) {
+            dueDate = null;
+            if (!parts[1].isEmpty()) {
+                dueDate = LocalDateTime.parse(parts[1], DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss"));
+            }
+        }
+        if (parts.length >= 3) {
+            associatedClass = parts[2];
+            if (parts[2].isEmpty()) {
+                associatedClass = " ";
+            }
+        }
+        if (parts.length >= 4) {
+            note = parts[3];
+            if (parts[3].isEmpty()) {
+                note = " ";
+            }
+        }
         return new AssignmentModel(name, dueDate, associatedClass, note);
     }
-
 }

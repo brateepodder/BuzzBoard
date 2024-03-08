@@ -1,4 +1,4 @@
-package com.example.calendarapp.ui.home;
+package com.example.calendarapp.ui.classes;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -14,30 +14,31 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.calendarapp.databinding.FragmentClassesBinding;
 import com.example.calendarapp.ui.models.ClassModel;
-import com.example.calendarapp.databinding.FragmentHomeBinding;
 import com.example.calendarapp.ui.adapters.ClassListAdapter;
 import com.example.calendarapp.R;
 import com.example.calendarapp.ui.adapters.DaysOfWeekAdapter;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class HomeFragment extends Fragment {
+public class ClassFragment extends Fragment {
+    private ClassViewModel classViewModel;
     private RecyclerView recyclerViewClasses;
     private ClassListAdapter adapter;
     private List<ClassModel> classList;
-    private FragmentHomeBinding binding;
+    private FragmentClassesBinding binding;
     private SharedPreferences sharedPreferences;
 
 
@@ -47,10 +48,9 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        classViewModel = new ViewModelProvider(this).get(ClassViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentClassesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         recyclerViewClasses = root.findViewById(R.id.recyclerViewClasses);
@@ -77,6 +77,10 @@ public class HomeFragment extends Fragment {
         });
 
         return root;
+    }
+
+    public List<ClassModel> getClassList() {
+        return this.classList;
     }
 
     private void loadClassesFromSharedPreferences() {
@@ -157,5 +161,13 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         saveClassesToSharedPreferences();
         binding = null;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        classViewModel = new ViewModelProvider(requireActivity()).get(ClassViewModel.class);
+        List<ClassModel> classList = getClassList();
+        classViewModel.setClassList(classList);
     }
 }
